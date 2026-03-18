@@ -184,9 +184,9 @@
         'sb_publishable_zxERqa7B-E7zroqc1O9Tow_D_yxImgb'
     );
 
-    _sb.auth.getSession().then(async ({ data }) => {
+    async function initProfile(user) {
         const wrap = document.getElementById('main-wrap');
-        if (!data.session) {
+        if (!user) {
             wrap.innerHTML = `
                 <div class="not-logged">
                     <p>// NOT_AUTHENTICATED — sign in to view your profile.</p>
@@ -195,12 +195,10 @@
             return;
         }
 
-        const user = data.session.user;
         const displayName = user.user_metadata?.full_name || user.user_metadata?.name || user.email.split('@')[0];
         const avatarLetter = displayName.charAt(0).toUpperCase();
         const isVerified = user.email_confirmed_at != null;
 
-        // load bookmarks count
         const { data: bms } = await _sb
             .from('bookmarks')
             .select('sound_id, sound_name')
@@ -210,7 +208,6 @@
         const joinDate = new Date(user.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 
         wrap.innerHTML = `
-            <!-- PROFILE HEADER -->
             <div class="profile-header">
                 <div class="avatar" id="avatar-el">${avatarLetter}</div>
                 <div class="profile-meta">
@@ -221,8 +218,6 @@
                     </span>
                 </div>
             </div>
-
-            <!-- STATS -->
             <div class="stats-row">
                 <div class="stat">
                     <div class="stat-num">${bookmarks.length}</div>
@@ -237,8 +232,6 @@
                     <div class="stat-label">AUTH_PROVIDER</div>
                 </div>
             </div>
-
-            <!-- EDIT PROFILE -->
             <div class="section-tag">// EDIT_PROFILE</div>
             <div class="form-block">
                 <div class="form-row">
@@ -254,8 +247,6 @@
                 <button class="btn-save" onclick="saveProfile()">$ SAVE_CHANGES →</button>
                 <div class="form-msg" id="profile-msg"></div>
             </div>
-
-            <!-- CHANGE PASSWORD -->
             <div class="section-tag" style="margin-top:32px;">// CHANGE_PASSWORD</div>
             <div class="form-block">
                 <div class="form-group">
@@ -269,18 +260,32 @@
                 <button class="btn-save" onclick="changePassword()">$ UPDATE_PASSWORD →</button>
                 <div class="form-msg" id="pass-msg"></div>
             </div>
-
-            <!-- BOOKMARKS PREVIEW -->
             <div class="section-tag" style="margin-top:32px;">// SAVED_BOOKMARKS</div>
             <div id="bm-preview-wrap">${renderBmPreview(bookmarks)}</div>
-
-            <!-- DANGER ZONE -->
             <div class="danger-zone">
                 <div class="danger-title">// DANGER_ZONE</div>
                 <div class="danger-desc">Signing out will end your current session.</div>
                 <button class="btn-danger" onclick="signOut()">$ SIGN_OUT →</button>
             </div>
         `;
+    }
+
+    // use onAuthStateChange to catch session after OAuth redirects
+    _sb.auth.onAuthStateChange((_event, session) => {
+        initProfile(session?.user || null);
+    });
+
+    // also try getSession immediately for already-logged-in users
+    _sb.auth.getSession().then(({ data }) => {
+        if (data.session) initProfile(data.session.user);
+        else if (!document.getElementById('main-wrap').innerHTML.includes('profile-header')) {
+            // no session found after a short wait — show not logged in
+            setTimeout(() => {
+                _sb.auth.getSession().then(({ data: d }) => {
+                    if (!d.session) initProfile(null);
+                });
+            }, 1500);
+        }
     });
 
     function renderBmPreview(bookmarks) {
