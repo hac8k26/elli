@@ -210,6 +210,23 @@
 
         /* ── DESKTOP ONLY ── */
         body { min-width: 1024px; }
+
+        /* ── AUTH TOAST ── */
+        #auth-toast {
+            position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(16px);
+            background: var(--text); color: var(--bg);
+            font-family: var(--mono); font-size: 11px;
+            padding: 14px 24px; z-index: 9999;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.25s, transform 0.25s;
+            display: flex; align-items: center; gap: 16px;
+            white-space: nowrap;
+        }
+        #auth-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: all; }
+        #auth-toast a {
+            color: var(--accent); text-decoration: none; font-weight: 600;
+            border-bottom: 1px solid var(--accent);
+        }
     </style>
 </head>
 <body>
@@ -224,6 +241,7 @@
 <nav>
     <div class="nav-logo">ELLIE</div>
     <a href="auth.html" class="nav-cta" id="nav-auth-btn">LOGIN / SIGN_UP →</a>
+    <span id="nav-user-name" style="display:none; font-size:11px; font-weight:600; color:var(--accent); letter-spacing:0.05em; cursor:pointer;" onclick="window.location.href='profile.html'" title="View profile"></span>
 </nav>
 
 <!-- HERO -->
@@ -240,7 +258,7 @@
             thousands of CC-licensed audio assets — sorted by popularity, filtered by genre.
         </p>
         <div class="hero-btns">
-            <a href="browse.html" class="btn-primary">$ ENTER_REGISTRY</a>
+            <a href="browse.html" class="btn-primary" id="enter-registry-btn" onclick="return checkAuthBeforeEnter(event)">$ ENTER_REGISTRY</a>
             <a href="#how" class="btn-secondary">HOW_IT_WORKS</a>
         </div>
         <div style="margin-top:16px;display:flex;gap:16px;">
@@ -364,52 +382,52 @@
         <h2 class="section-title">Find your category</h2>
     </div>
     <div class="genres-grid">
-        <a href="browse.html" class="genre-card">
+        <a href="browse.html" class="genre-card" onclick="return checkAuthBeforeEnter(event)">
             <div class="genre-name">ELECTRONIC</div>
             <div class="genre-count">SYNTHS · BEATS · PADS</div>
             <div class="genre-bar"></div>
         </a>
-        <a href="browse.html" class="genre-card">
+        <a href="browse.html" class="genre-card" onclick="return checkAuthBeforeEnter(event)">
             <div class="genre-name">AMBIENT</div>
             <div class="genre-count">DRONES · TEXTURES · SPACE</div>
             <div class="genre-bar"></div>
         </a>
-        <a href="browse.html" class="genre-card">
+        <a href="browse.html" class="genre-card" onclick="return checkAuthBeforeEnter(event)">
             <div class="genre-name">HIP_HOP</div>
             <div class="genre-count">BEATS · LOOPS · SAMPLES</div>
             <div class="genre-bar"></div>
         </a>
-        <a href="browse.html" class="genre-card">
+        <a href="browse.html" class="genre-card" onclick="return checkAuthBeforeEnter(event)">
             <div class="genre-name">JAZZ</div>
             <div class="genre-count">PIANO · BRASS · SWING</div>
             <div class="genre-bar"></div>
         </a>
-        <a href="browse.html" class="genre-card">
+        <a href="browse.html" class="genre-card" onclick="return checkAuthBeforeEnter(event)">
             <div class="genre-name">CLASSICAL</div>
             <div class="genre-count">STRINGS · ORCHESTRA · SOLO</div>
             <div class="genre-bar"></div>
         </a>
-        <a href="browse.html" class="genre-card">
+        <a href="browse.html" class="genre-card" onclick="return checkAuthBeforeEnter(event)">
             <div class="genre-name">ROCK</div>
             <div class="genre-count">GUITAR · DRUMS · RIFFS</div>
             <div class="genre-bar"></div>
         </a>
-        <a href="browse.html" class="genre-card">
+        <a href="browse.html" class="genre-card" onclick="return checkAuthBeforeEnter(event)">
             <div class="genre-name">LO_FI</div>
             <div class="genre-count">CHILL · VINYL · HAZY</div>
             <div class="genre-bar"></div>
         </a>
-        <a href="browse.html" class="genre-card">
+        <a href="browse.html" class="genre-card" onclick="return checkAuthBeforeEnter(event)">
             <div class="genre-name">CINEMATIC</div>
             <div class="genre-count">SCORE · TENSION · EPIC</div>
             <div class="genre-bar"></div>
         </a>
-        <a href="browse.html" class="genre-card">
+        <a href="browse.html" class="genre-card" onclick="return checkAuthBeforeEnter(event)">
             <div class="genre-name">DRUMS</div>
             <div class="genre-count">LOOPS · FILLS · BREAKS</div>
             <div class="genre-bar"></div>
         </a>
-        <a href="browse.html" class="genre-card">
+        <a href="browse.html" class="genre-card" onclick="return checkAuthBeforeEnter(event)">
             <div class="genre-name">ALL_MUSIC</div>
             <div class="genre-count">BROWSE · EVERYTHING</div>
             <div class="genre-bar"></div>
@@ -422,12 +440,12 @@
     <div class="section-tag" style="color:var(--secondary);">// READY_TO_START</div>
     <h2>Enter the registry.<br>Find your sound.</h2>
     <p>500,000+ CC-licensed audio assets. Live API. No account needed.</p>
-    <a href="browse.html" class="btn-primary">$ LAUNCH_REGISTRY →</a>
+    <a href="browse.html" class="btn-primary" onclick="return checkAuthBeforeEnter(event)">$ LAUNCH_REGISTRY →</a>
 </div>
 
 <!-- FOOTER -->
 <footer>
-    <div class="footer-logo"><img src="logo.svg" alt="ELLIE" height="32" style="display:block;"></div>
+    <div class="footer-logo">ELLIE</div>
     <div class="footer-copy">© 2026 — CC_LICENSED_CONTENT</div>
 </footer>
 
@@ -459,6 +477,12 @@
         ticker.appendChild(el);
     });
 </script>
+<!-- AUTH TOAST -->
+<div id="auth-toast">
+    ⚠ LOGIN_REQUIRED — <a href="auth.html">SIGN IN →</a>
+    <span onclick="document.getElementById('auth-toast').classList.remove('show')" style="cursor:pointer;color:var(--secondary);font-size:13px;">✕</span>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
     const _sb = supabase.createClient(
@@ -467,9 +491,29 @@
     );
     _sb.auth.getSession().then(({ data }) => {
         if (data.session) {
+            const user = data.session.user;
+            const name = user.user_metadata?.full_name || user.user_metadata?.name || user.email.split('@')[0];
             document.getElementById('nav-auth-btn').style.display = 'none';
+            const nameEl = document.getElementById('nav-user-name');
+            nameEl.textContent = '[ ' + name.toUpperCase() + ' ]';
+            nameEl.style.display = 'inline';
         }
     });
+
+    function checkAuthBeforeEnter(e) {
+        const btn = document.getElementById('nav-auth-btn');
+        // if login button is hidden, user is logged in — allow navigation
+        if (btn.style.display === 'none') return true;
+        // not logged in — block and show toast
+        e.preventDefault();
+        const toast = document.getElementById('auth-toast');
+        toast.classList.add('show');
+        // shake the nav login button
+        btn.style.outline = '2px solid var(--accent)';
+        setTimeout(() => { btn.style.outline = ''; }, 1200);
+        setTimeout(() => toast.classList.remove('show'), 4000);
+        return false;
+    }
 </script>
 </body>
 </html>

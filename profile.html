@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta name="viewport" content="width=1280">
+    <title>Ellie — Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f9f9f7;
+            --text: #1a1a18;
+            --secondary: #6b6b68;
+            --border: #e5e5e1;
+            --accent: #d97757;
+            --mono: 'IBM Plex Mono', monospace;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg); color: var(--text);
+            font-family: var(--mono); min-height: 100vh;
+            display: flex; flex-direction: column; min-width: 1024px;
+        }
+
+        nav {
+            padding: 18px 40px; border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; background: var(--bg); z-index: 100;
+        }
+        .nav-logo { font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none; }
+        .nav-back { font-size: 11px; color: var(--secondary); text-decoration: none; cursor: pointer; }
+        .nav-back:hover { color: var(--accent); }
+
+        .wrap {
+            max-width: 860px; width: 100%; margin: 0 auto;
+            padding: 48px 40px; flex: 1;
+        }
+
+        /* ── HEADER ── */
+        .profile-header {
+            display: flex; align-items: flex-start; gap: 32px;
+            border: 1px solid var(--border); padding: 32px;
+            margin-bottom: 2px;
+        }
+        .avatar {
+            width: 72px; height: 72px; background: var(--text);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; font-weight: 600; color: var(--bg);
+            flex-shrink: 0; letter-spacing: -0.02em;
+        }
+        .profile-meta { flex: 1; }
+        .profile-name {
+            font-size: 22px; font-weight: 600; margin-bottom: 4px;
+            letter-spacing: -0.02em;
+        }
+        .profile-email { font-size: 11px; color: var(--secondary); margin-bottom: 12px; }
+        .profile-badge {
+            display: inline-block; font-size: 9px; padding: 3px 8px;
+            border: 1px solid var(--border); color: var(--secondary);
+            letter-spacing: 0.1em;
+        }
+        .profile-badge.verified { border-color: var(--accent); color: var(--accent); }
+
+        /* ── STATS ROW ── */
+        .stats-row {
+            display: flex; gap: 1px; background: var(--border);
+            border: 1px solid var(--border); border-top: none; margin-bottom: 32px;
+        }
+        .stat {
+            flex: 1; background: var(--bg); padding: 16px 20px;
+        }
+        .stat-num { font-size: 24px; font-weight: 600; color: var(--accent); }
+        .stat-label { font-size: 9px; color: var(--secondary); margin-top: 2px; letter-spacing: 0.08em; }
+
+        /* ── SECTIONS ── */
+        .section-tag {
+            font-size: 10px; color: var(--accent); letter-spacing: 0.15em;
+            margin-bottom: 16px;
+        }
+
+        /* ── FORM ── */
+        .form-block {
+            border: 1px solid var(--border); padding: 28px; margin-bottom: 2px;
+        }
+        .form-group { display: flex; flex-direction: column; margin-bottom: 18px; }
+        .form-group:last-child { margin-bottom: 0; }
+        .form-label {
+            font-size: 9px; color: var(--secondary); letter-spacing: 0.1em;
+            margin-bottom: 6px;
+        }
+        .form-input {
+            width: 100%; padding: 11px 14px;
+            border: 1px solid var(--border); background: var(--bg);
+            font-family: var(--mono); font-size: 13px; color: var(--text);
+            outline: none; transition: border-color 0.2s;
+        }
+        .form-input:focus { border-color: var(--accent); }
+        .form-input:disabled { color: var(--secondary); cursor: not-allowed; }
+        .form-row { display: flex; gap: 12px; }
+        .form-row .form-group { flex: 1; }
+
+        .btn-save {
+            padding: 12px 24px; background: var(--text); color: var(--bg);
+            border: none; font-family: var(--mono); font-size: 11px;
+            font-weight: 600; cursor: pointer; letter-spacing: 0.08em;
+            margin-top: 20px;
+        }
+        .btn-save:hover { background: var(--accent); }
+
+        .btn-danger {
+            padding: 12px 24px; background: none; color: #c0392b;
+            border: 1px solid #c0392b; font-family: var(--mono); font-size: 11px;
+            font-weight: 600; cursor: pointer; letter-spacing: 0.08em;
+            margin-top: 20px;
+        }
+        .btn-danger:hover { background: #c0392b; color: #fff; }
+
+        .form-msg {
+            font-size: 10px; padding: 10px 12px; border: 1px solid var(--border);
+            display: none; margin-top: 12px;
+        }
+        .form-msg.error { border-color: #c0392b; color: #c0392b; background: #fdf0ef; }
+        .form-msg.success { border-color: var(--accent); color: var(--accent); background: #fdf6f3; }
+        .form-msg.show { display: block; }
+
+        /* ── BOOKMARKS PREVIEW ── */
+        .bm-preview-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 1px; background: var(--border); border: 1px solid var(--border);
+        }
+        .bm-preview-card {
+            background: var(--bg); padding: 12px; cursor: pointer;
+        }
+        .bm-preview-card:hover { background: #f1f1ee; }
+        .bm-preview-img {
+            width: 100%; aspect-ratio: 16/9; overflow: hidden;
+            border: 1px solid var(--border); margin-bottom: 8px;
+        }
+        .bm-preview-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) sepia(0.2); opacity: 0.8; }
+        .bm-preview-name { font-size: 9px; font-weight: 600; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+        .bm-preview-id { font-size: 8px; color: var(--secondary); margin-top: 2px; }
+        .bm-empty-msg { font-size: 11px; color: var(--secondary); padding: 32px; text-align: center; border: 1px solid var(--border); }
+
+        /* ── SIGN OUT ── */
+        .danger-zone {
+            border: 1px solid #f0d0cc; padding: 28px; margin-top: 32px;
+        }
+        .danger-title { font-size: 10px; color: #c0392b; letter-spacing: 0.15em; margin-bottom: 12px; }
+        .danger-desc { font-size: 11px; color: var(--secondary); margin-bottom: 0; line-height: 1.7; }
+
+        /* ── NOT LOGGED IN ── */
+        .not-logged {
+            text-align: center; padding: 80px 20px;
+        }
+        .not-logged p { font-size: 12px; color: var(--secondary); margin-bottom: 20px; }
+        .btn-login {
+            padding: 12px 28px; background: var(--text); color: var(--bg);
+            border: none; font-family: var(--mono); font-size: 12px;
+            font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block;
+        }
+        .btn-login:hover { background: var(--accent); }
+    </style>
+</head>
+<body>
+<script>
+    if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        window.location.replace('desktop-only.html');
+    }
+</script>
+
+<nav>
+    <a href="index.html" class="nav-logo">ELLIE</a>
+    <a href="browse.html" class="nav-back">← BACK_TO_REGISTRY</a>
+</nav>
+
+<div class="wrap" id="main-wrap">
+    <div style="font-size:11px;color:var(--secondary);padding:40px 0;">LOADING_PROFILE...</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    const _sb = supabase.createClient(
+        'https://zpwtdnpxmmabgkxzyxsj.supabase.co',
+        'sb_publishable_zxERqa7B-E7zroqc1O9Tow_D_yxImgb'
+    );
+
+    _sb.auth.getSession().then(async ({ data }) => {
+        const wrap = document.getElementById('main-wrap');
+        if (!data.session) {
+            wrap.innerHTML = `
+                <div class="not-logged">
+                    <p>// NOT_AUTHENTICATED — sign in to view your profile.</p>
+                    <a href="auth.html" class="btn-login">$ LOGIN →</a>
+                </div>`;
+            return;
+        }
+
+        const user = data.session.user;
+        const displayName = user.user_metadata?.full_name || user.user_metadata?.name || user.email.split('@')[0];
+        const avatarLetter = displayName.charAt(0).toUpperCase();
+        const isVerified = user.email_confirmed_at != null;
+
+        // load bookmarks count
+        const { data: bms } = await _sb
+            .from('bookmarks')
+            .select('sound_id, sound_name')
+            .eq('user_id', user.id);
+        const bookmarks = bms || [];
+
+        const joinDate = new Date(user.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+
+        wrap.innerHTML = `
+            <!-- PROFILE HEADER -->
+            <div class="profile-header">
+                <div class="avatar" id="avatar-el">${avatarLetter}</div>
+                <div class="profile-meta">
+                    <div class="profile-name" id="display-name-el">${displayName.toUpperCase()}</div>
+                    <div class="profile-email">${user.email}</div>
+                    <span class="profile-badge ${isVerified ? 'verified' : ''}">
+                        ${isVerified ? '✓ EMAIL_VERIFIED' : '⚠ EMAIL_UNVERIFIED'}
+                    </span>
+                </div>
+            </div>
+
+            <!-- STATS -->
+            <div class="stats-row">
+                <div class="stat">
+                    <div class="stat-num">${bookmarks.length}</div>
+                    <div class="stat-label">BOOKMARKS</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">${joinDate.split(' ')[2]}</div>
+                    <div class="stat-label">JOINED_YEAR</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">${user.app_metadata?.provider?.toUpperCase() || 'EMAIL'}</div>
+                    <div class="stat-label">AUTH_PROVIDER</div>
+                </div>
+            </div>
+
+            <!-- EDIT PROFILE -->
+            <div class="section-tag">// EDIT_PROFILE</div>
+            <div class="form-block">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">DISPLAY_NAME</label>
+                        <input class="form-input" type="text" id="inp-name" value="${displayName}" placeholder="your name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">EMAIL_ADDRESS</label>
+                        <input class="form-input" type="email" id="inp-email" value="${user.email}" disabled>
+                    </div>
+                </div>
+                <button class="btn-save" onclick="saveProfile()">$ SAVE_CHANGES →</button>
+                <div class="form-msg" id="profile-msg"></div>
+            </div>
+
+            <!-- CHANGE PASSWORD -->
+            <div class="section-tag" style="margin-top:32px;">// CHANGE_PASSWORD</div>
+            <div class="form-block">
+                <div class="form-group">
+                    <label class="form-label">NEW_PASSWORD</label>
+                    <input class="form-input" type="password" id="inp-pass" placeholder="Min. 8 characters">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">CONFIRM_PASSWORD</label>
+                    <input class="form-input" type="password" id="inp-pass-confirm" placeholder="••••••••">
+                </div>
+                <button class="btn-save" onclick="changePassword()">$ UPDATE_PASSWORD →</button>
+                <div class="form-msg" id="pass-msg"></div>
+            </div>
+
+            <!-- BOOKMARKS PREVIEW -->
+            <div class="section-tag" style="margin-top:32px;">// SAVED_BOOKMARKS</div>
+            <div id="bm-preview-wrap">${renderBmPreview(bookmarks)}</div>
+
+            <!-- DANGER ZONE -->
+            <div class="danger-zone">
+                <div class="danger-title">// DANGER_ZONE</div>
+                <div class="danger-desc">Signing out will end your current session.</div>
+                <button class="btn-danger" onclick="signOut()">$ SIGN_OUT →</button>
+            </div>
+        `;
+    });
+
+    function renderBmPreview(bookmarks) {
+        if (!bookmarks.length) return `<div class="bm-empty-msg">// NO_BOOKMARKS_YET — star sounds in the registry to save them here.</div>`;
+        const cards = bookmarks.slice(0, 8).map(b => `
+            <div class="bm-preview-card" onclick="window.location.href='browse.html'">
+                <div class="bm-preview-img">
+                    <img src="https://picsum.photos/seed/${b.sound_id}/300/200?grayscale" loading="lazy">
+                </div>
+                <div class="bm-preview-name">${b.sound_name.toLowerCase().replace(/\s+/g,'_').substring(0,30)}</div>
+                <div class="bm-preview-id">#API_FS_${b.sound_id}</div>
+            </div>
+        `).join('');
+        return `<div class="bm-preview-grid">${cards}</div>`;
+    }
+
+    async function saveProfile() {
+        const name = document.getElementById('inp-name').value.trim();
+        const msg = document.getElementById('profile-msg');
+        if (!name) return showMsg('profile-msg', 'error', 'ERR: Name cannot be empty.');
+        showMsg('profile-msg', 'success', 'SAVING...');
+        const { error } = await _sb.auth.updateUser({ data: { full_name: name } });
+        if (error) return showMsg('profile-msg', 'error', 'ERR: ' + error.message);
+        document.getElementById('display-name-el').textContent = name.toUpperCase();
+        document.getElementById('avatar-el').textContent = name.charAt(0).toUpperCase();
+        showMsg('profile-msg', 'success', 'PROFILE_UPDATED ✓');
+    }
+
+    async function changePassword() {
+        const pass = document.getElementById('inp-pass').value;
+        const confirm = document.getElementById('inp-pass-confirm').value;
+        if (pass.length < 8) return showMsg('pass-msg', 'error', 'ERR: Minimum 8 characters.');
+        if (pass !== confirm) return showMsg('pass-msg', 'error', 'ERR: Passwords do not match.');
+        showMsg('pass-msg', 'success', 'UPDATING...');
+        const { error } = await _sb.auth.updateUser({ password: pass });
+        if (error) return showMsg('pass-msg', 'error', 'ERR: ' + error.message);
+        showMsg('pass-msg', 'success', 'PASSWORD_UPDATED ✓');
+        document.getElementById('inp-pass').value = '';
+        document.getElementById('inp-pass-confirm').value = '';
+    }
+
+    async function signOut() {
+        await _sb.auth.signOut();
+        window.location.href = 'index.html';
+    }
+
+    function showMsg(id, type, text) {
+        const el = document.getElementById(id);
+        el.className = 'form-msg ' + type + ' show';
+        el.textContent = text;
+    }
+</script>
+</body>
+</html>

@@ -108,12 +108,10 @@
         #detail-view {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg); z-index: 1000;
-            display: flex; flex-direction: column;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
+            display: none; flex-direction: column;
             overflow: hidden;
         }
-        #detail-view.active { transform: translateX(0); }
+        #detail-view.active { display: flex; }
 
         .detail-topbar {
             flex-shrink: 0;
@@ -256,63 +254,6 @@
         .nav-link:hover { color: var(--accent); border-color: var(--border); }
         .nav-link.active { color: var(--text); border-color: var(--border); }
 
-        /* ── BOOKMARKS PAGE ── */
-        #bookmarks-view {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg); z-index: 999;
-            display: flex; flex-direction: column;
-            opacity: 0;
-            transform: scale(0.97);
-            pointer-events: none;
-            transition: opacity 0.25s ease, transform 0.25s ease;
-            overflow: hidden;
-        }
-        #bookmarks-view.active {
-            opacity: 1;
-            transform: scale(1);
-            pointer-events: all;
-        }
-        .bm-topbar {
-            flex-shrink: 0; padding: 14px 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: space-between;
-        }
-        .bm-title { font-size: 13px; font-weight: 600; color: var(--accent); }
-        .bm-count { font-size: 10px; color: var(--secondary); }
-        .bm-scroll { flex: 1; overflow-y: auto; padding: 20px; }
-        .bm-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1px; background: var(--border); border: 1px solid var(--border);
-            width: 100%; max-width: 1400px; margin: 0 auto;
-        }
-        .bm-empty {
-            font-size: 11px; color: var(--secondary); text-align: center;
-            padding: 60px 20px; width: 100%; max-width: 1400px; margin: 0 auto;
-        }
-        .bm-empty span { display: block; font-size: 28px; margin-bottom: 12px; }
-        .bm-card {
-            background: var(--bg); padding: 12px;
-            display: flex; flex-direction: column; min-height: 180px; cursor: pointer;
-        }
-        .bm-card:hover { background: #f1f1ee; }
-        .bm-img {
-            width: 100%; aspect-ratio: 16/9; background: #eeebe6;
-            margin-bottom: 10px; border: 1px solid var(--border); overflow: hidden;
-        }
-        .bm-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) sepia(0.2); opacity: 0.8; }
-        .bm-name { font-size: 10px; font-weight: 600; margin-bottom: 6px; overflow: hidden; height: 28px; }
-        .bm-id { font-size: 8px; color: var(--secondary); margin-bottom: 8px; }
-        .bm-remove {
-            margin-top: auto; padding: 6px; border: 1px solid var(--border);
-            background: none; font-family: var(--mono); font-size: 9px;
-            color: var(--secondary); cursor: pointer; text-align: center;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .bm-remove:hover { border-color: var(--accent); color: var(--accent); }
-        @media (min-width: 600px)  { .bm-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (min-width: 900px)  { .bm-grid { grid-template-columns: repeat(4, 1fr); } }
-        @media (min-width: 1200px) { .bm-grid { grid-template-columns: repeat(5, 1fr); } }
         .tabs {
             display: flex; flex-wrap: wrap; gap: 4px;
             width: 100%; max-width: 1400px; margin-bottom: 20px;
@@ -379,7 +320,6 @@
         .detail-info { flex: 1; }
         .detail-title { font-size: 20px; }
         .detail-scroll { padding: 32px 60px; }
-        .bm-grid { grid-template-columns: repeat(5, 1fr); }
     </style>
 </head>
 <body>
@@ -391,12 +331,9 @@
 </script>
 
 <nav>
-    <div class="nav-logo" onclick="showPage('browse')">ELLIE</div>
-    <div class="nav-links">
-        <button class="nav-link active" id="nav-browse" onclick="showPage('browse')">BROWSE</button>
-        <a href="bookmarks.html" class="nav-link" style="text-decoration:none;">BOOKMARKS <span id="bm-nav-count"></span></a>
-        <a href="auth.html" class="nav-link" style="text-decoration:none;">LOGIN</a>
-        <a href="index.html" class="nav-link" style="text-decoration:none;">HOME</a>
+    <div class="nav-logo">ELLIE</div>
+    <div style="display:flex; align-items:center; gap:20px;">
+        <span id="nav-user-name" style="font-size:11px; font-weight:600; color:var(--accent); letter-spacing:0.05em; cursor:pointer;" onclick="window.location.href='profile.html'" title="View profile"></span>
     </div>
 </nav>
 
@@ -437,17 +374,6 @@
 </div>
 
 <div id="toast"></div>
-
-<!-- BOOKMARKS PAGE -->
-<div id="bookmarks-view">
-    <div class="bm-topbar">
-        <div class="bm-title">★ BOOKMARKS</div>
-        <div class="bm-count" id="bm-total">0 saved</div>
-    </div>
-    <div class="bm-scroll">
-        <div id="bm-content"></div>
-    </div>
-</div>
 
 <div id="detail-view">
     <div class="detail-topbar">
@@ -541,7 +467,6 @@
     let favorites = JSON.parse(localStorage.getItem('fs_favs') || '[]');
 
     window.onload = () => {
-        updateBmNavCount();
         fetchPopular();
         fetchData();
     };
@@ -838,7 +763,6 @@
         else { favorites.splice(idx,1); toast('BOOKMARK_REMOVED'); }
         localStorage.setItem('fs_favs', JSON.stringify(favorites));
         updateFavUI();
-        updateBmNavCount();
     }
     function updateFavUI() {
         if (!currentMeta) return;
@@ -846,8 +770,6 @@
         document.getElementById('fav-btn').textContent = saved ? '★' : '☆';
         document.getElementById('fav-action-btn').textContent = saved ? '★ SAVED' : '☆ BOOKMARK';
     }
-
-    /* ── SHARE / META ── */
     function copyShareLink() {
         if (!currentMeta) return;
         navigator.clipboard.writeText(`https://freesound.org/s/${currentMeta.id}/`)
@@ -879,68 +801,81 @@
         setTimeout(() => t.classList.remove('show'), 2500);
     }
 
-    /* ── PAGES ── */
-    function showPage(page) {
-        const bv = document.getElementById('bookmarks-view');
-        if (page === 'bookmarks') {
-            bv.classList.add('active');
-            document.getElementById('nav-browse').classList.remove('active');
-            document.getElementById('nav-bookmarks').classList.add('active');
-            renderBookmarks();
-        } else {
-            bv.classList.remove('active');
-            document.getElementById('nav-browse').classList.add('active');
-            document.getElementById('nav-bookmarks').classList.remove('active');
-        }
-    }
-
-    function renderBookmarks() {
-        const content = document.getElementById('bm-content');
-        document.getElementById('bm-total').textContent = `${favorites.length} saved`;
-        updateBmNavCount();
-        if (!favorites.length) {
-            content.innerHTML = `<div class="bm-empty"><span>☆</span>No bookmarks yet.<br>Star any sound in the detail view to save it here.</div>`;
-            return;
-        }
-        content.innerHTML = '';
-        const grid = document.createElement('div');
-        grid.className = 'bm-grid';
-        favorites.forEach(fav => {
-            const imgUrl = `https://picsum.photos/seed/${fav.id}/600/400?grayscale`;
-            const card = document.createElement('div');
-            card.className = 'bm-card';
-            card.innerHTML = `
-                <div class="bm-img"><img src="${imgUrl}" loading="lazy"></div>
-                <div class="bm-id">#API_FS_${fav.id}</div>
-                <div class="bm-name">${fav.name.toLowerCase().replace(/\s+/g,'_').substring(0,40)}</div>
-                <button class="bm-remove" onclick="event.stopPropagation(); removeFav(${fav.id})">✕ REMOVE</button>
-            `;
-            card.onclick = () => {
-                showPage('browse');
-                openDetail(fav.id, imgUrl);
-            };
-            grid.appendChild(card);
-        });
-        content.appendChild(grid);
-    }
-
-    function removeFav(id) {
-        favorites = favorites.filter(f => f.id !== id);
-        localStorage.setItem('fs_favs', JSON.stringify(favorites));
-        renderBookmarks();
-        toast('BOOKMARK_REMOVED');
-    }
-
-    function updateBmNavCount() {
-        const el = document.getElementById('bm-nav-count');
-        el.textContent = favorites.length ? `[${favorites.length}]` : '';
-    }
-
     /* ── UTILS ── */
     function fmt(s) {
         const m = Math.floor(s/60), sec = Math.floor(s%60);
         return `${m}:${sec.toString().padStart(2,'0')}`;
     }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    const _sb = supabase.createClient(
+        'https://zpwtdnpxmmabgkxzyxsj.supabase.co',
+        'sb_publishable_zxERqa7B-E7zroqc1O9Tow_D_yxImgb'
+    );
+
+    let _user = null;
+
+    // ── INIT ──
+    _sb.auth.getSession().then(({ data }) => {
+        if (data.session) {
+            _user = data.session.user;
+            const name = _user.user_metadata?.full_name || _user.user_metadata?.name || _user.email.split('@')[0];
+            document.getElementById('nav-user-name').textContent = '[ ' + name.toUpperCase() + ' ]';
+            loadBookmarksFromDB();
+            subscribeBookmarks();
+        }
+    });
+
+    // ── LOAD from Supabase ──
+    async function loadBookmarksFromDB() {
+        const { data, error } = await _sb
+            .from('bookmarks')
+            .select('sound_id, sound_name')
+            .eq('user_id', _user.id);
+        if (error) { console.warn('bookmark load error', error); return; }
+        favorites = data.map(r => ({ id: r.sound_id, name: r.sound_name }));
+        localStorage.setItem('fs_favs', JSON.stringify(favorites));
+        updateFavUI();
+    }
+
+    // ── REALTIME subscription ──
+    function subscribeBookmarks() {
+        _sb.channel('bookmarks-changes')
+            .on('postgres_changes', {
+                event: '*',
+                schema: 'public',
+                table: 'bookmarks',
+                filter: `user_id=eq.${_user.id}`
+            }, () => {
+                loadBookmarksFromDB();
+            })
+            .subscribe();
+    }
+
+    // ── OVERRIDE toggleFav to use Supabase when logged in ──
+    const _toggleFavLocal = toggleFav;
+    toggleFav = async function() {
+        if (!currentMeta) return;
+        if (!_user) { _toggleFavLocal(); return; }
+
+        const id = currentMeta.id;
+        const isSaved = favorites.some(f => f.id === id);
+
+        if (isSaved) {
+            await _sb.from('bookmarks').delete()
+                .eq('user_id', _user.id).eq('sound_id', id);
+            toast('BOOKMARK_REMOVED');
+        } else {
+            await _sb.from('bookmarks').insert({
+                user_id: _user.id,
+                sound_id: id,
+                sound_name: currentMeta.name
+            });
+            toast('☆ BOOKMARKED');
+        }
+    };
 </script>
 
 </body>
