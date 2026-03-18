@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta name="viewport" content="width=1280">
+    <title>Ellie — Terms & Privacy</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f9f9f7;
+            --text: #1a1a18;
+            --secondary: #6b6b68;
+            --border: #e5e5e1;
+            --accent: #d97757;
+            --mono: 'IBM Plex Mono', monospace;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg); color: var(--text);
+            font-family: var(--mono); min-height: 100vh;
+        }
+
+        nav {
+            padding: 18px 40px;
+            border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; background: var(--bg); z-index: 10;
+        }
+        .nav-logo { font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none; }
+        .nav-back { font-size: 11px; color: var(--secondary); text-decoration: none; }
+        .nav-back:hover { color: var(--accent); }
+
+        .page-wrap {
+            display: flex; max-width: 1100px; margin: 0 auto;
+            padding: 48px 40px; gap: 60px;
+        }
+
+        /* SIDEBAR TOC */
+        .toc {
+            width: 200px; flex-shrink: 0;
+            position: sticky; top: 80px; align-self: flex-start;
+        }
+        .toc-title { font-size: 9px; color: var(--secondary); letter-spacing: 0.12em; margin-bottom: 12px; }
+        .toc a {
+            display: block; font-size: 10px; color: var(--secondary);
+            text-decoration: none; padding: 5px 0;
+            border-left: 2px solid var(--border); padding-left: 10px; margin-bottom: 2px;
+        }
+        .toc a:hover, .toc a.active { color: var(--accent); border-left-color: var(--accent); }
+
+        /* CONTENT */
+        .content { flex: 1; min-width: 0; }
+
+        .doc-header { margin-bottom: 40px; padding-bottom: 20px; border-bottom: 2px solid var(--text); }
+        .doc-tag { font-size: 9px; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 10px; }
+        .doc-title { font-size: 28px; font-weight: 600; margin-bottom: 8px; }
+        .doc-meta { font-size: 10px; color: var(--secondary); }
+
+        .doc-section { margin-bottom: 48px; scroll-margin-top: 100px; }
+        .section-num { font-size: 9px; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 6px; }
+        .section-title { font-size: 14px; font-weight: 600; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+        .section-body { font-size: 11px; color: var(--secondary); line-height: 2; }
+        .section-body p { margin-bottom: 14px; }
+        .section-body ul { padding-left: 20px; margin-bottom: 14px; }
+        .section-body ul li { margin-bottom: 6px; }
+        .section-body b { color: var(--text); }
+        .section-body a { color: var(--accent); text-decoration: none; }
+        .section-body a:hover { text-decoration: underline; }
+
+        .highlight-box {
+            border: 1px solid var(--border); padding: 16px;
+            margin: 16px 0; font-size: 10px; color: var(--secondary); line-height: 1.8;
+        }
+        .highlight-box b { color: var(--accent); }
+
+        /* footer */
+        .doc-footer {
+            margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border);
+            font-size: 10px; color: var(--secondary);
+            display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+        }
+        .doc-footer a { color: var(--accent); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            .page-wrap { flex-direction: column; padding: 32px 20px; gap: 32px; }
+            .toc { width: 100%; position: static; }
+            .doc-title { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+<script>
+    if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        sessionStorage.setItem('ellie_dest', 'terms.html');
+        window.location.replace('desktop-only.html');
+    }
+</script>
+
+<nav>
+    <a href="browse.html" class="nav-logo"><img src="logo.svg" alt="ELLIE" height="32" style="display:block;"></a>
+    <a href="browse.html" class="nav-back">← BACK_TO_HOME</a>
+</nav>
+
+<div class="page-wrap">
+
+    <!-- TOC -->
+    <aside class="toc">
+        <div class="toc-title">// CONTENTS</div>
+        <a href="#terms">01 — TERMS_OF_SERVICE</a>
+        <a href="#use">02 — ACCEPTABLE_USE</a>
+        <a href="#ip">03 — INTELLECTUAL_PROPERTY</a>
+        <a href="#disclaimer">04 — DISCLAIMER</a>
+        <a href="#privacy" id="toc-privacy">05 — PRIVACY_POLICY</a>
+        <a href="#data">06 — DATA_WE_COLLECT</a>
+        <a href="#cookies">07 — COOKIES</a>
+        <a href="#third-party">08 — THIRD_PARTIES</a>
+        <a href="#contact">09 — CONTACT</a>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+        <div class="doc-header">
+            <div class="doc-tag">// LEGAL_DOCUMENTS</div>
+            <h1 class="doc-title">Terms of Service<br>&amp; Privacy Policy</h1>
+            <div class="doc-meta">Last updated: March 2026 &nbsp;·&nbsp; Effective immediately</div>
+        </div>
+
+        <div class="highlight-box">
+            <b>TL;DR —</b> Ellie is a free audio discovery tool powered by the Freesound API.
+            We don't sell your data. All sounds are CC-licensed. Use the platform responsibly.
+        </div>
+
+        <!-- TERMS -->
+        <section class="doc-section" id="terms">
+            <div class="section-num">01</div>
+            <div class="section-title">TERMS_OF_SERVICE</div>
+            <div class="section-body">
+                <p>By accessing or using Ellie ("the Service"), you agree to be bound by these Terms of Service. If you do not agree, please do not use the Service.</p>
+                <p>Ellie is a web-based audio registry that provides access to sounds via the <a href="https://freesound.org" target="_blank">Freesound API</a>. We reserve the right to modify these terms at any time. Continued use of the Service after changes constitutes acceptance.</p>
+                <p>You must be at least 13 years of age to use this Service. By using Ellie, you represent that you meet this requirement.</p>
+            </div>
+        </section>
+
+        <section class="doc-section" id="use">
+            <div class="section-num">02</div>
+            <div class="section-title">ACCEPTABLE_USE</div>
+            <div class="section-body">
+                <p>You agree not to use the Service to:</p>
+                <ul>
+                    <li>Violate any applicable laws or regulations</li>
+                    <li>Infringe on the intellectual property rights of others</li>
+                    <li>Attempt to gain unauthorized access to any part of the Service</li>
+                    <li>Scrape, crawl, or automate requests beyond normal usage</li>
+                    <li>Distribute malware or harmful code</li>
+                    <li>Harass, abuse, or harm other users</li>
+                </ul>
+                <p>We reserve the right to suspend or terminate access for violations of these terms without notice.</p>
+            </div>
+        </section>
+
+        <section class="doc-section" id="ip">
+            <div class="section-num">03</div>
+            <div class="section-title">INTELLECTUAL_PROPERTY</div>
+            <div class="section-body">
+                <p>All audio content displayed on Ellie is sourced from the Freesound API and is licensed under various <b>Creative Commons</b> licenses. Each sound's specific license is available in its metadata.</p>
+                <p>You are responsible for reviewing and complying with the license terms of any sound you download or use. Common licenses include:</p>
+                <ul>
+                    <li><b>CC0</b> — Public domain, no restrictions</li>
+                    <li><b>CC BY</b> — Attribution required</li>
+                    <li><b>CC BY-NC</b> — Attribution, non-commercial use only</li>
+                    <li><b>CC BY-ND</b> — Attribution, no derivatives</li>
+                </ul>
+                <p>The Ellie interface, design, and code are the property of their respective creators and may not be reproduced without permission.</p>
+            </div>
+        </section>
+
+        <section class="doc-section" id="disclaimer">
+            <div class="section-num">04</div>
+            <div class="section-title">DISCLAIMER</div>
+            <div class="section-body">
+                <p>The Service is provided <b>"as is"</b> without warranties of any kind, express or implied. We do not guarantee uninterrupted access, accuracy of content, or fitness for a particular purpose.</p>
+                <p>Ellie is not responsible for the content of third-party audio files or any damages arising from their use. We are not affiliated with Freesound or the Centre de Recerca i Difusió de la Creació Sonora (CRDCS).</p>
+                <p>To the maximum extent permitted by law, Ellie shall not be liable for any indirect, incidental, or consequential damages arising from your use of the Service.</p>
+            </div>
+        </section>
+
+        <!-- PRIVACY -->
+        <section class="doc-section" id="privacy">
+            <div class="section-num">05</div>
+            <div class="section-title">PRIVACY_POLICY</div>
+            <div class="section-body">
+                <p>Your privacy matters. This policy explains what information Ellie collects, how it is used, and your rights regarding that information.</p>
+                <p>By using the Service, you consent to the data practices described in this policy. This policy applies to all users of Ellie, including visitors and registered accounts.</p>
+            </div>
+        </section>
+
+        <section class="doc-section" id="data">
+            <div class="section-num">06</div>
+            <div class="section-title">DATA_WE_COLLECT</div>
+            <div class="section-body">
+                <p><b>Information you provide:</b></p>
+                <ul>
+                    <li>Email address and name (if you create an account)</li>
+                    <li>Password (stored as a secure hash — never in plain text)</li>
+                </ul>
+                <p><b>Information collected automatically:</b></p>
+                <ul>
+                    <li>Browser type and version</li>
+                    <li>Pages visited and time spent</li>
+                    <li>IP address (anonymized after 30 days)</li>
+                </ul>
+                <p><b>Locally stored data:</b></p>
+                <ul>
+                    <li>Bookmarked sounds are stored in your browser's <b>localStorage</b> — this data never leaves your device</li>
+                </ul>
+                <p>We do not sell, rent, or trade your personal information to third parties.</p>
+            </div>
+        </section>
+
+        <section class="doc-section" id="cookies">
+            <div class="section-num">07</div>
+            <div class="section-title">COOKIES</div>
+            <div class="section-body">
+                <p>Ellie uses minimal cookies strictly necessary for the Service to function:</p>
+                <ul>
+                    <li><b>Session cookies</b> — to keep you logged in during a session</li>
+                    <li><b>Preference cookies</b> — to remember your settings</li>
+                </ul>
+                <p>We do not use advertising or tracking cookies. You can disable cookies in your browser settings, though some features may not function correctly as a result.</p>
+            </div>
+        </section>
+
+        <section class="doc-section" id="third-party">
+            <div class="section-num">08</div>
+            <div class="section-title">THIRD_PARTIES</div>
+            <div class="section-body">
+                <p>Ellie integrates with the following third-party services:</p>
+                <ul>
+                    <li><b>Freesound API</b> — audio content provider. Subject to <a href="https://freesound.org/help/tos/" target="_blank">Freesound's Terms</a></li>
+                    <li><b>Google Fonts</b> — font delivery via CDN</li>
+                    <li><b>Picsum Photos</b> — placeholder imagery</li>
+                </ul>
+                <p>These services may collect data independently under their own privacy policies. We encourage you to review them.</p>
+            </div>
+        </section>
+
+        <section class="doc-section" id="contact">
+            <div class="section-num">09</div>
+            <div class="section-title">CONTACT</div>
+            <div class="section-body">
+                <p>If you have questions about these terms or your data, please reach out:</p>
+                <div class="highlight-box">
+                    <b>EMAIL:</b> legal@ellie.app<br>
+                    <b>RESPONSE_TIME:</b> Within 5 business days<br>
+                    <b>DATA_REQUESTS:</b> You may request deletion of your account data at any time
+                </div>
+            </div>
+        </section>
+
+        <div class="doc-footer">
+            <span>© 2026 Ellie — All rights reserved</span>
+            <span><a href="browse.html">HOME</a> &nbsp;·&nbsp; <a href="auth.html">LOGIN</a> &nbsp;·&nbsp; <a href="browse.html">BROWSE</a></span>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    // highlight active TOC link on scroll
+    const sections = document.querySelectorAll('.doc-section');
+    const tocLinks = document.querySelectorAll('.toc a');
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+        tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+    });
+</script>
+</body>
+</html>

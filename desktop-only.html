@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ellie — Enable Desktop Mode</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f9f9f7;
+            --text: #1a1a18;
+            --secondary: #6b6b68;
+            --border: #e5e5e1;
+            --accent: #d97757;
+            --mono: 'IBM Plex Mono', monospace;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg); color: var(--text);
+            font-family: var(--mono); min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+            padding: 32px 20px;
+        }
+        .logo {
+            font-size: 14px; font-weight: 600; color: var(--accent);
+            letter-spacing: 0.05em; margin-bottom: 40px; align-self: flex-start;
+        }
+        .card {
+            width: 100%; max-width: 480px;
+            border: 1px solid var(--border); padding: 32px;
+        }
+        .card-tag { font-size: 9px; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 16px; }
+        .card-title { font-size: 18px; font-weight: 600; line-height: 1.3; margin-bottom: 10px; }
+        .card-desc { font-size: 11px; color: var(--secondary); line-height: 1.8; margin-bottom: 28px; }
+        .os-tabs {
+            display: flex; gap: 1px; background: var(--border);
+            border: 1px solid var(--border); margin-bottom: 24px;
+        }
+        .os-tab {
+            flex: 1; padding: 10px 8px; text-align: center;
+            font-family: var(--mono); font-size: 10px; font-weight: 600;
+            cursor: pointer; background: var(--bg); color: var(--secondary);
+            border: none; letter-spacing: 0.06em;
+        }
+        .os-tab.active { background: var(--text); color: var(--bg); }
+        .os-tab:hover:not(.active) { color: var(--accent); }
+        .steps { display: none; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+        .steps.active { display: flex; }
+        .step { background: var(--bg); padding: 14px 16px; display: flex; gap: 14px; align-items: flex-start; }
+        .step-num { font-size: 11px; font-weight: 600; color: var(--accent); flex-shrink: 0; width: 20px; padding-top: 1px; }
+        .step-text { font-size: 11px; line-height: 1.7; color: var(--secondary); }
+        .step-text b { color: var(--text); }
+        .proceed-btn {
+            width: 100%; margin-top: 28px; padding: 16px;
+            background: var(--text); color: var(--bg);
+            border: none; font-family: var(--mono); font-size: 12px;
+            font-weight: 600; cursor: pointer; letter-spacing: 0.06em;
+        }
+        .proceed-btn:hover { background: var(--accent); }
+        .error-msg {
+            display: none; margin-top: 12px; padding: 10px 14px;
+            border: 1px solid #c0392b; color: #c0392b;
+            font-size: 10px; line-height: 1.6;
+        }
+        .error-msg.show { display: block; }
+        .note { margin-top: 20px; font-size: 9px; color: var(--secondary); text-align: center; line-height: 1.7; }
+    </style>
+</head>
+<body>
+
+<div class="logo"><img src="logo.svg" alt="ELLIE" height="32" style="display:block;"></div>
+
+<div class="card">
+    <div class="card-tag">// DESKTOP_MODE_REQUIRED</div>
+    <h1 class="card-title">Ellie is designed<br>for desktop browsers.</h1>
+    <p class="card-desc">
+        Enable <b>Desktop Site</b> mode in your browser settings to continue.
+        Select your device below for instructions.
+    </p>
+
+    <div class="os-tabs">
+        <button class="os-tab active" onclick="showOS('android')">ANDROID</button>
+        <button class="os-tab" onclick="showOS('ios')">iOS / SAFARI</button>
+        <button class="os-tab" onclick="showOS('other')">OTHER</button>
+    </div>
+
+    <div class="steps active" id="steps-android">
+        <div class="step"><div class="step-num">01</div><div class="step-text">Open the <b>three-dot menu</b> in the top-right corner of Chrome.</div></div>
+        <div class="step"><div class="step-num">02</div><div class="step-text">Tap <b>Desktop site</b> to enable the checkbox.</div></div>
+        <div class="step"><div class="step-num">03</div><div class="step-text">The page will reload — then tap <b>CONTINUE</b> below.</div></div>
+    </div>
+
+    <div class="steps" id="steps-ios">
+        <div class="step"><div class="step-num">01</div><div class="step-text">Tap the <b>aA</b> button in the address bar (left side).</div></div>
+        <div class="step"><div class="step-num">02</div><div class="step-text">Select <b>Request Desktop Website</b> from the menu.</div></div>
+        <div class="step"><div class="step-num">03</div><div class="step-text">The page will reload — then tap <b>CONTINUE</b> below.</div></div>
+    </div>
+
+    <div class="steps" id="steps-other">
+        <div class="step"><div class="step-num">01</div><div class="step-text">Open your browser <b>settings or menu</b>.</div></div>
+        <div class="step"><div class="step-num">02</div><div class="step-text">Look for <b>Desktop site</b> or <b>Request desktop version</b> and enable it.</div></div>
+        <div class="step"><div class="step-num">03</div><div class="step-text">The page will reload — then tap <b>CONTINUE</b> below.</div></div>
+    </div>
+
+    <button class="proceed-btn" onclick="proceed()">I'VE ENABLED IT &rarr; CONTINUE</button>
+
+    <div class="error-msg" id="error-msg">
+        ERR: Desktop mode not detected. Enable it in your browser and try again.
+    </div>
+
+    <div class="note">
+        Desktop mode changes your browser's user-agent to desktop.<br>
+        You cannot continue until it is active.
+    </div>
+</div>
+
+<script>
+    function isMobileUA() {
+        return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    }
+
+    function showOS(os) {
+        var names = ['android', 'ios', 'other'];
+        document.querySelectorAll('.os-tab').forEach(function(t, i) {
+            t.classList.toggle('active', names[i] === os);
+        });
+        document.querySelectorAll('.steps').forEach(function(s) { s.classList.remove('active'); });
+        document.getElementById('steps-' + os).classList.add('active');
+    }
+
+    // auto-detect OS
+    (function() {
+        var ua = navigator.userAgent;
+        if (/android/i.test(ua)) showOS('android');
+        else if (/iphone|ipad|ipod/i.test(ua)) showOS('ios');
+        else showOS('other');
+    })();
+
+    // if desktop mode already active (UA changed to desktop), auto-proceed
+    if (!isMobileUA()) {
+        var dest = sessionStorage.getItem('ellie_dest') || 'index.html';
+        sessionStorage.removeItem('ellie_dest');
+        window.location.replace(dest);
+    }
+
+    function proceed() {
+        if (isMobileUA()) {
+            document.getElementById('error-msg').classList.add('show');
+            return;
+        }
+        document.getElementById('error-msg').classList.remove('show');
+        var dest = sessionStorage.getItem('ellie_dest') || 'index.html';
+        sessionStorage.removeItem('ellie_dest');
+        window.location.href = dest;
+    }
+</script>
+</body>
+</html>

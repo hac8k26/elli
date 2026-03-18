@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm your Ellie account</title>
+</head>
+<body style="margin:0;padding:0;background:#f9f9f7;font-family:'Courier New',Courier,monospace;">
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f9f9f7;padding:40px 20px;">
+    <tr>
+        <td align="center">
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:520px;">
+
+                <!-- HEADER -->
+                <tr>
+                    <td style="padding-bottom:32px;">
+                        <span style="font-size:14px;font-weight:700;color:#d97757;letter-spacing:0.08em;">ELLIE</span>
+                    </td>
+                </tr>
+
+                <!-- DIVIDER -->
+                <tr>
+                    <td style="border-top:1px solid #e5e5e1;padding-bottom:40px;"></td>
+                </tr>
+
+                <!-- BODY -->
+                <tr>
+                    <td style="background:#ffffff;border:1px solid #e5e5e1;padding:40px;">
+
+                        <p style="margin:0 0 8px 0;font-size:9px;color:#6b6b68;letter-spacing:0.12em;">ACCOUNT_CONFIRMATION</p>
+                        <h1 style="margin:0 0 24px 0;font-size:20px;font-weight:700;color:#1a1a18;letter-spacing:0.04em;">Confirm your email</h1>
+
+                        <p style="margin:0 0 24px 0;font-size:13px;color:#6b6b68;line-height:1.7;">
+                            Thanks for signing up. Click the button below to verify your email address and activate your account.
+                        </p>
+
+                        <!-- CTA BUTTON -->
+                        <table cellpadding="0" cellspacing="0" border="0" style="margin:0 0 32px 0;">
+                            <tr>
+                                <td style="background:#1a1a18;">
+                                    <a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:14px 32px;font-family:'Courier New',Courier,monospace;font-size:12px;font-weight:700;color:#f9f9f7;text-decoration:none;letter-spacing:0.08em;">
+                                        $ CONFIRM_EMAIL &#8594;
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p style="margin:0 0 8px 0;font-size:10px;color:#6b6b68;line-height:1.6;">
+                            Or copy and paste this link into your browser:
+                        </p>
+                        <p style="margin:0 0 32px 0;font-size:10px;color:#d97757;word-break:break-all;line-height:1.6;">
+                            {{ .ConfirmationURL }}
+                        </p>
+
+                        <!-- DIVIDER -->
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;">
+                            <tr>
+                                <td style="border-top:1px solid #e5e5e1;"></td>
+                            </tr>
+                        </table>
+
+                        <p style="margin:0;font-size:10px;color:#6b6b68;line-height:1.6;">
+                            This link expires in 24 hours. If you didn't create an account, you can safely ignore this email.
+                        </p>
+
+                    </td>
+                </tr>
+
+                <!-- FOOTER -->
+                <tr>
+                    <td style="padding-top:32px;">
+                        <p style="margin:0;font-size:9px;color:#6b6b68;letter-spacing:0.08em;">
+                            &copy; ELLIE &nbsp;&#183;&nbsp; <a href="{{ .SiteURL }}/terms.html" style="color:#6b6b68;text-decoration:none;">TERMS</a> &nbsp;&#183;&nbsp; <a href="{{ .SiteURL }}/terms.html#privacy" style="color:#6b6b68;text-decoration:none;">PRIVACY</a>
+                        </p>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

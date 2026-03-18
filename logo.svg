@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 40" width="80" height="40">
+  <style>
+    text { font-family: 'IBM Plex Mono', monospace; font-weight: 600; }
+  </style>
+  <!-- dot -->
+  <circle cx="8" cy="28" r="5" fill="#d97757"/>
+  <!-- E -->
+  <text x="20" y="34" font-size="32" fill="#1a1a18"
