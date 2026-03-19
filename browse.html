@@ -422,7 +422,7 @@
             body { padding: 40px; }
             input { font-size: 15px; }
             .grid { grid-template-columns: repeat(5, 1fr); }
-            .popular-strip { grid-template-columns: repeat(10, 1fr); }
+            .popular-strip { grid-template-columns: repeat(3, 1fr); }
             .tabs { flex-wrap: wrap; overflow-x: visible; }
             .detail-container { flex-direction: row; gap: 40px; align-items: flex-start; }
             .detail-visual { flex: 0 0 480px; }
@@ -649,7 +649,7 @@
     /* ── POPULAR STRIP ── */
     function fetchPopular() {
         freesound.textSearch("music", {
-            page: 1, page_size: 10,
+            page: 1, page_size: 6,
             fields: "name,previews,id,num_downloads,duration",
             sort: "downloads_desc"
         }, function(data) {
