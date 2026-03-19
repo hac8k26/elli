@@ -22,9 +22,9 @@
 
         body {
             background: var(--bg); color: var(--text);
-            font-family: var(--mono); margin: 0; padding: 40px;
+            font-family: var(--mono); margin: 0; padding: 16px;
             display: flex; flex-direction: column; align-items: center;
-            overflow-x: hidden; min-width: 1024px;
+            overflow-x: hidden;
         }
 
         /* ── HEADER ── */
@@ -38,7 +38,7 @@
         .prompt { margin-right: 12px; font-weight: 600; color: var(--accent); flex-shrink: 0; }
         input {
             background: transparent; border: none; outline: none;
-            font-family: var(--mono); font-size: 14px; width: 100%; color: var(--text);
+            font-family: var(--mono); font-size: 16px; width: 100%; color: var(--text);
         }
 
         /* ── GRID ── */
@@ -231,7 +231,7 @@
         .btn {
             padding: 11px 16px; border: 1px solid var(--text); background: transparent;
             font-family: var(--mono); cursor: pointer; text-decoration: none; color: var(--text);
-            font-size: 10px; font-weight: 600; text-align: center; flex: 1; min-width: 130px;
+            font-size: 10px; font-weight: 600; text-align: center; flex: 1; min-width: 0;
             -webkit-tap-highlight-color: transparent;
         }
         .btn-filled { background: var(--text); color: var(--bg); }
@@ -255,9 +255,13 @@
         .nav-link.active { color: var(--text); border-color: var(--border); }
 
         .tabs {
-            display: flex; flex-wrap: wrap; gap: 4px;
+            display: flex; flex-wrap: nowrap; gap: 4px;
             width: 100%; max-width: 1400px; margin-bottom: 20px;
+            overflow-x: auto; -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; padding-bottom: 4px;
         }
+        .tabs::-webkit-scrollbar { display: none; }
+        .tab { flex-shrink: 0; }
         .tab {
             padding: 6px 12px; border: 1px solid var(--border);
             background: none; font-family: var(--mono); font-size: 10px;
@@ -311,33 +315,57 @@
         /* ── DESKTOP LAYOUT ── */
         @media (min-width: 900px) {
             body { padding: 40px; }
-            .brand { font-size: 14px; }
             input { font-size: 15px; }
             .grid { grid-template-columns: repeat(5, 1fr); }
             .popular-strip { grid-template-columns: repeat(10, 1fr); }
+            .tabs { flex-wrap: wrap; overflow-x: visible; }
             .detail-container { flex-direction: row; gap: 40px; align-items: flex-start; }
             .detail-visual { flex: 0 0 480px; }
             .detail-visual img { max-height: 100%; }
             .detail-info { flex: 1; }
             .detail-title { font-size: 20px; }
             .detail-scroll { padding: 32px 60px; }
+            .kbd-hint { display: block; }
         }
-        /* ── RESPONSIVE ── */
+        /* ── TABLET ── */
         @media (max-width: 899px) {
-            body { padding: 16px; }
             nav { margin-bottom: 12px; }
             .grid { grid-template-columns: repeat(2, 1fr); }
             .popular-strip { grid-template-columns: repeat(2, 1fr); }
             .detail-scroll { padding: 16px; }
             .detail-container { flex-direction: column; }
             .detail-visual { width: 100%; }
+            .detail-visual img { max-height: 200px; }
             .detail-title { font-size: 15px; }
             .similar-grid { grid-template-columns: repeat(2, 1fr); }
+            .kbd-hint { display: none; }
+            .action-btns { gap: 6px; }
         }
+        /* ── MOBILE ── */
         @media (max-width: 480px) {
+            body { padding: 12px; }
+            nav { padding-bottom: 12px; margin-bottom: 12px; }
+            .nav-logo { font-size: 12px; }
+            #nav-user-name { font-size: 10px !important; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            header { margin-bottom: 16px; }
+            .search-area { padding: 8px 0; }
             .grid { grid-template-columns: 1fr; }
             .popular-strip { grid-template-columns: 1fr; }
-            .det-controls { flex-wrap: wrap; }
+            .cell { min-height: unset; padding: 10px; }
+            .cell-name { font-size: 9px; height: auto; }
+            .det-controls { flex-wrap: wrap; gap: 6px; }
+            .speed-group { flex-wrap: nowrap; }
+            .vol-row { width: 100%; }
+            .action-btns { flex-direction: column; gap: 6px; }
+            .action-btns .btn { flex: unset; width: 100%; }
+            .similar-grid { grid-template-columns: repeat(2, 1fr); }
+            .detail-topbar { padding: 10px 14px; }
+            .back-btn { font-size: 11px; }
+            .section-label { font-size: 9px; }
+            .tabs { gap: 3px; }
+            .tab { padding: 5px 10px; font-size: 9px; }
+            .pop-card { padding: 8px 10px; }
+            .pop-name { font-size: 9px; }
         }
     </style>
 </head>
