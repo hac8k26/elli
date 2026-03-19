@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ellie</title>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -208,8 +208,6 @@
         .footer-links a:hover { color: var(--accent); }
         .footer-copy { font-size: 10px; color: var(--secondary); }
 
-        /* ── DESKTOP ONLY ── */
-        body { min-width: 1024px; }
 
         /* ── AUTH TOAST ── */
         #auth-toast {
@@ -227,16 +225,29 @@
             color: var(--accent); text-decoration: none; font-weight: 600;
             border-bottom: 1px solid var(--accent);
         }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            nav { padding: 16px 20px; }
+            .hero { grid-template-columns: 1fr; padding: 40px 20px; gap: 32px; }
+            .hero-right { display: none; }
+            .features-grid { grid-template-columns: 1fr 1fr; }
+            .steps { grid-template-columns: 1fr 1fr; }
+            .genres-grid { grid-template-columns: repeat(2, 1fr); }
+            .section { padding: 48px 20px; }
+            .cta-banner { padding: 48px 20px; }
+            footer { padding: 24px 20px; }
+        }
+        @media (max-width: 540px) {
+            .features-grid { grid-template-columns: 1fr; }
+            .steps { grid-template-columns: 1fr; }
+            .genres-grid { grid-template-columns: 1fr 1fr; }
+            .hero-btns { flex-direction: column; }
+            .nav-links { display: none; }
+        }
     </style>
 </head>
 <body>
-<script>
-    if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        sessionStorage.setItem('ellie_dest', 'index.html');
-        window.location.replace('desktop-only.html');
-    }
-</script>
-
 <!-- NAV -->
 <nav>
     <div class="nav-logo">ELLIE</div>

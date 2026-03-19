@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ellie</title>
     
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -301,7 +301,6 @@
         .pop-play:hover { border-color: var(--accent); color: var(--accent); }
         audio.pop-audio { display: none; }
 
-        .popular-strip { grid-template-columns: repeat(10, 1fr); }
         .pagination { margin-top: 40px; text-align: center; width: 100%; }
         .btn-load {
             background: var(--text); color: var(--bg); border: none;
@@ -309,27 +308,40 @@
             display: none; font-size: 12px; width: auto;
         }
 
-        /* ── DESKTOP FIXED LAYOUT ── */
-        body { padding: 40px; min-width: 1024px; }
-        .brand { font-size: 14px; }
-        input { font-size: 15px; }
-        .grid { grid-template-columns: repeat(5, 1fr); }
-        .detail-container { flex-direction: row; gap: 40px; align-items: flex-start; }
-        .detail-visual { flex: 0 0 480px; }
-        .detail-visual img { max-height: 100%; }
-        .detail-info { flex: 1; }
-        .detail-title { font-size: 20px; }
-        .detail-scroll { padding: 32px 60px; }
+        /* ── DESKTOP LAYOUT ── */
+        @media (min-width: 900px) {
+            body { padding: 40px; }
+            .brand { font-size: 14px; }
+            input { font-size: 15px; }
+            .grid { grid-template-columns: repeat(5, 1fr); }
+            .popular-strip { grid-template-columns: repeat(10, 1fr); }
+            .detail-container { flex-direction: row; gap: 40px; align-items: flex-start; }
+            .detail-visual { flex: 0 0 480px; }
+            .detail-visual img { max-height: 100%; }
+            .detail-info { flex: 1; }
+            .detail-title { font-size: 20px; }
+            .detail-scroll { padding: 32px 60px; }
+        }
+        /* ── RESPONSIVE ── */
+        @media (max-width: 899px) {
+            body { padding: 16px; }
+            nav { margin-bottom: 12px; }
+            .grid { grid-template-columns: repeat(2, 1fr); }
+            .popular-strip { grid-template-columns: repeat(2, 1fr); }
+            .detail-scroll { padding: 16px; }
+            .detail-container { flex-direction: column; }
+            .detail-visual { width: 100%; }
+            .detail-title { font-size: 15px; }
+            .similar-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .grid { grid-template-columns: 1fr; }
+            .popular-strip { grid-template-columns: 1fr; }
+            .det-controls { flex-wrap: wrap; }
+        }
     </style>
 </head>
 <body>
-<script>
-    if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        sessionStorage.setItem('ellie_dest', 'browse.html');
-        window.location.replace('desktop-only.html');
-    }
-</script>
-
 <nav>
     <div class="nav-logo">ELLIE</div>
     <div style="display:flex; align-items:center; gap:20px;">
