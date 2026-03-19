@@ -481,9 +481,8 @@
 
             <!-- ACTIONS -->
             <div class="action-btns">
-                <a id="det-dl" href="#" download class="btn btn-filled">↓ DOWNLOAD_RAW</a>
+                <button class="btn btn-filled" id="det-dl-btn" onclick="downloadSound()">↓ DOWNLOAD_RAW</button>
                 <button class="btn" onclick="copyShareLink()">⎘ SHARE_LINK</button>
-                <button class="btn" onclick="showMetaJSON()">{ } JSON_META</button>
                 <button class="btn" id="fav-action-btn" onclick="toggleFav()">☆ BOOKMARK</button>
             </div>
 
@@ -660,8 +659,6 @@
             const name = sound.name.toLowerCase().replace(/\s+/g,'_');
             document.getElementById('det-name').textContent = name;
             document.getElementById('det-id').textContent = `#LIVE_API_ID_${sound.id}`;
-            document.getElementById('det-dl').href = sound.previews['preview-hq-mp3'] || sound.previews['preview-lq-mp3'];
-            document.getElementById('det-dl').download = name + '.mp3';
             document.getElementById('spec-dur').textContent = fmt(sound.duration);
             document.getElementById('spec-sr').textContent = (sound.samplerate || '—') + ' Hz';
             document.getElementById('spec-ch').textContent = sound.channels || '—';
@@ -794,13 +791,39 @@
         audio.currentTime = (e.offsetX / canvas.offsetWidth) * audio.duration;
     }
 
+    /* ── DOWNLOAD ── */
+    async function downloadSound() {
+        if (!currentMeta) return;
+        const url = currentMeta.previews['preview-hq-mp3'] || currentMeta.previews['preview-lq-mp3'];
+        const name = currentMeta.name.toLowerCase().replace(/\s+/g,'_') + '.mp3';
+        const btn = document.getElementById('det-dl-btn');
+        btn.textContent = '↓ DOWNLOADING...';
+        btn.disabled = true;
+        try {
+            const res = await fetch(url);
+            const blob = await res.blob();
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = name;
+            a.click();
+            URL.revokeObjectURL(a.href);
+            toast('DOWNLOAD_STARTED');
+        } catch(e) {
+            // fallback: open in new tab
+            window.open(url, '_blank');
+            toast('OPENING_IN_TAB');
+        }
+        btn.textContent = '↓ DOWNLOAD_RAW';
+        btn.disabled = false;
+    }
+
     /* ── FAVORITES ── */
     function toggleFav() {
         if (!currentMeta) return;
         const id = currentMeta.id;
         const idx = favorites.findIndex(f => f.id === id);
         if (idx === -1) { favorites.push({ id, name: currentMeta.name }); toast('☆ BOOKMARKED'); }
-        else { favorites.splice(idx,1); toast('BOOKMARK_REMOVED'); }
+        else { favorites.splice(idx, 1); toast('BOOKMARK_REMOVED'); }
         localStorage.setItem('fs_favs', JSON.stringify(favorites));
         updateFavUI();
     }
@@ -814,11 +837,6 @@
         if (!currentMeta) return;
         navigator.clipboard.writeText(`https://freesound.org/s/${currentMeta.id}/`)
             .then(() => toast('LINK_COPIED')).catch(() => toast('COPY_FAILED'));
-    }
-    function showMetaJSON() {
-        if (!currentMeta) return;
-        console.log('[FS_META]', currentMeta);
-        toast('JSON_META → console (F12)');
     }
 
     /* ── KEYBOARD ── */
