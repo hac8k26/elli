@@ -922,17 +922,24 @@
         const isSaved = favorites.some(f => f.id === id);
 
         if (isSaved) {
-            await _sb.from('bookmarks').delete()
+            const { error } = await _sb.from('bookmarks').delete()
                 .eq('user_id', _user.id).eq('sound_id', id);
+            if (error) { toast('ERR: ' + error.message); return; }
+            favorites = favorites.filter(f => f.id !== id);
+            localStorage.setItem('fs_favs', JSON.stringify(favorites));
             toast('BOOKMARK_REMOVED');
         } else {
-            await _sb.from('bookmarks').insert({
+            const { error } = await _sb.from('bookmarks').insert({
                 user_id: _user.id,
                 sound_id: id,
                 sound_name: currentMeta.name
             });
+            if (error) { toast('ERR: ' + error.message); return; }
+            favorites.push({ id, name: currentMeta.name });
+            localStorage.setItem('fs_favs', JSON.stringify(favorites));
             toast('☆ BOOKMARKED');
         }
+        updateFavUI();
     };
 </script>
 
