@@ -298,7 +298,8 @@
     async function showForgot() {
         const email = document.getElementById('login-email').value;
         if (!email) return showMsg('login-msg', 'error', 'ERR: Enter your email first.');
-        const { error } = await _supabase.auth.resetPasswordForEmail(email);
+        const redirectTo = window.location.origin + window.location.pathname.replace('auth.html', '') + 'reset-password.html';
+        const { error } = await _supabase.auth.resetPasswordForEmail(email, { redirectTo });
         if (error) return showMsg('login-msg', 'error', 'ERR: ' + error.message);
         showMsg('login-msg', 'success', 'RESET_LINK — check your email.');
     }
@@ -344,4 +345,4 @@
     }
 </script>
 </body>
-</html>
+</html
