@@ -360,25 +360,25 @@
         </p>
         <div class="hero-btns">
             <a href="browse.html" class="btn-primary" id="enter-registry-btn" data-tip="Browse the sound registry" onclick="return checkAuthBeforeEnter(event)">$ ENTER_REGISTRY</a>
-            <a href="#how" class="btn-secondary" data-tip="See how it works">HOW_IT_WORKS</a>
+            <a href="#how" class="btn-secondary" data-tip="See how Ellie works">HOW_IT_WORKS</a>
         </div>
         <div style="margin-top:16px;display:flex;gap:16px;">
-            <a href="terms.html" style="font-family:var(--mono);font-size:9px;color:var(--secondary);text-decoration:none;letter-spacing:0.08em;">TERMS</a>
-            <a href="terms.html#privacy" style="font-family:var(--mono);font-size:9px;color:var(--secondary);text-decoration:none;letter-spacing:0.08em;">PRIVACY</a>
+            <a href="terms.html" style="font-family:var(--mono);font-size:9px;color:var(--secondary);text-decoration:none;letter-spacing:0.08em;" data-tip="Terms of Service">TERMS</a>
+            <a href="terms.html#privacy" style="font-family:var(--mono);font-size:9px;color:var(--secondary);text-decoration:none;letter-spacing:0.08em;" data-tip="Privacy Policy">PRIVACY</a>
         </div>
     </div>
     <div class="hero-right">
         <div class="hero-grid-preview" id="preview-grid"></div>
         <div class="hero-stat-row">
-            <div class="hero-stat">
+            <div class="hero-stat" data-tip="500,000+ sounds in the registry">
                 <div class="hero-stat-num">500K+</div>
                 <div class="hero-stat-label">SOUNDS</div>
             </div>
-            <div class="hero-stat">
+            <div class="hero-stat" data-tip="All sounds are Creative Commons licensed">
                 <div class="hero-stat-num">CC</div>
                 <div class="hero-stat-label">LICENSE</div>
             </div>
-            <div class="hero-stat">
+            <div class="hero-stat" data-tip="Live data from the Freesound API">
                 <div class="hero-stat-num">LIVE</div>
                 <div class="hero-stat-label">API_FEED</div>
             </div>
@@ -398,42 +398,42 @@
         <h2 class="section-title">Everything you need<br>to find the right sound</h2>
     </div>
     <div class="features-grid">
-        <div class="feature-card">
+        <div class="feature-card" data-tip="Real-time search via Freesound API">
             <div class="feature-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             </div>
             <div class="feature-title">LIVE_SEARCH</div>
             <div class="feature-desc">Query the Freesound API in real time. Results sorted by downloads so the best surfaces first.</div>
         </div>
-        <div class="feature-card">
+        <div class="feature-card" data-tip="Play any sound directly in the grid">
             <div class="feature-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
             </div>
             <div class="feature-title">INSTANT_PREVIEW</div>
             <div class="feature-desc">Play any sound directly in the grid. No page loads, no redirects — just click and listen.</div>
         </div>
-        <div class="feature-card">
+        <div class="feature-card" data-tip="Sorted by most downloaded">
             <div class="feature-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
             </div>
             <div class="feature-title">POPULARITY_SORT</div>
             <div class="feature-desc">Top 10 most-downloaded sounds shown on load. Always know what's trending in the registry.</div>
         </div>
-        <div class="feature-card">
+        <div class="feature-card" data-tip="Download HQ MP3 previews">
             <div class="feature-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             </div>
             <div class="feature-title">DOWNLOAD_RAW</div>
             <div class="feature-desc">Download HQ MP3 previews directly. All assets are CC-licensed and free to use.</div>
         </div>
-        <div class="feature-card">
+        <div class="feature-card" data-tip="Save sounds to your favorites">
             <div class="feature-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             </div>
             <div class="feature-title">BOOKMARKS</div>
             <div class="feature-desc">Star any sound to save it locally. Your favorites persist across sessions via localStorage.</div>
         </div>
-        <div class="feature-card">
+        <div class="feature-card" data-tip="Filter by genre">
             <div class="feature-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
             </div>
@@ -452,25 +452,25 @@
     <div class="steps">
         <div class="step">
             <div class="step-num">01</div>
-            <div class="step-title">ENTER_REGISTRY</div>
+            <div class="step-title" data-tip="Open the app and browse popular sounds">ENTER_REGISTRY</div>
             <div class="step-desc">Open the app. Popular sounds load automatically, sorted by most downloaded.</div>
             <div class="step-arrow">→</div>
         </div>
         <div class="step">
             <div class="step-num">02</div>
-            <div class="step-title">SEARCH_OR_BROWSE</div>
+            <div class="step-title" data-tip="Search by keyword or pick a genre">SEARCH_OR_BROWSE</div>
             <div class="step-desc">Type any keyword or pick a genre tab to filter the live API results instantly.</div>
             <div class="step-arrow">→</div>
         </div>
         <div class="step">
             <div class="step-num">03</div>
-            <div class="step-title">PREVIEW_SOUND</div>
+            <div class="step-title" data-tip="Play and scrub any sound">PREVIEW_SOUND</div>
             <div class="step-desc">Hit play on any card. Open the detail view for waveform scrubbing, loop, and speed controls.</div>
             <div class="step-arrow">→</div>
         </div>
         <div class="step">
             <div class="step-num">04</div>
-            <div class="step-title">DOWNLOAD_OR_SAVE</div>
+            <div class="step-title" data-tip="Download or bookmark sounds">DOWNLOAD_OR_SAVE</div>
             <div class="step-desc">Download the HQ file or bookmark it. Share a direct Freesound link with one click.</div>
         </div>
     </div>
@@ -546,8 +546,8 @@
 
 <!-- FOOTER -->
 <footer>
-    <div class="footer-logo">ELLIE</div>
-    <div class="footer-copy">© 2026 — CC_LICENSED_CONTENT</div>
+    <div class="footer-logo" data-tip="Ellie — Sound Registry">ELLIE</div>
+    <div class="footer-copy" data-tip="All sounds are Creative Commons licensed">© 2026 — CC_LICENSED_CONTENT</div>
 </footer>
 
 

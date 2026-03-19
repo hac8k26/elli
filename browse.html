@@ -465,7 +465,7 @@
 </head>
 <body>
 <nav>
-    <div class="nav-logo" data-tip="Home">ELLIE</div>
+    <div class="nav-logo" data-tip="Go to home page" onclick="window.location.href='index.html'">ELLIE</div>
     <div style="display:flex; align-items:center; gap:12px;">
         <div class="notif-wrap" id="notif-wrap">
         <button class="notif-btn" id="notif-btn" onclick="toggleNotif()" data-tip="Notifications">
@@ -478,7 +478,7 @@
         <div class="notif-panel" id="notif-panel">
             <div class="notif-header">
                 <span class="notif-header-title">// NOTIFICATIONS</span>
-                <button class="notif-mark-all" onclick="markAllRead()">MARK_ALL_READ</button>
+                <button class="notif-mark-all" onclick="markAllRead()" data-tip="Mark all notifications as read">MARK_ALL_READ</button>
             </div>
             <div class="notif-list" id="notif-list"></div>
             <div class="notif-footer">ELLIE_REGISTRY — v1.0</div>
@@ -498,16 +498,16 @@
 
 <!-- GENRE TABS -->
 <div class="tabs" id="genre-tabs">
-    <button class="tab active" onclick="setGenre('music','this')">ALL_MUSIC</button>
-    <button class="tab" onclick="setGenre('electronic music','this')">ELECTRONIC</button>
-    <button class="tab" onclick="setGenre('ambient music','this')">AMBIENT</button>
-    <button class="tab" onclick="setGenre('hip hop beat','this')">HIP_HOP</button>
-    <button class="tab" onclick="setGenre('jazz music','this')">JAZZ</button>
-    <button class="tab" onclick="setGenre('classical music','this')">CLASSICAL</button>
-    <button class="tab" onclick="setGenre('rock music','this')">ROCK</button>
-    <button class="tab" onclick="setGenre('lofi music','this')">LO_FI</button>
-    <button class="tab" onclick="setGenre('cinematic music','this')">CINEMATIC</button>
-    <button class="tab" onclick="setGenre('drum loop','this')">DRUMS</button>
+    <button class="tab active" onclick="setGenre('music','this')" data-tip="Browse all music">ALL_MUSIC</button>
+    <button class="tab" onclick="setGenre('electronic music','this')" data-tip="Browse Electronic sounds">ELECTRONIC</button>
+    <button class="tab" onclick="setGenre('ambient music','this')" data-tip="Browse Ambient sounds">AMBIENT</button>
+    <button class="tab" onclick="setGenre('hip hop beat','this')" data-tip="Browse Hip Hop sounds">HIP_HOP</button>
+    <button class="tab" onclick="setGenre('jazz music','this')" data-tip="Browse Jazz sounds">JAZZ</button>
+    <button class="tab" onclick="setGenre('classical music','this')" data-tip="Browse Classical sounds">CLASSICAL</button>
+    <button class="tab" onclick="setGenre('rock music','this')" data-tip="Browse Rock sounds">ROCK</button>
+    <button class="tab" onclick="setGenre('lofi music','this')" data-tip="Browse Lo-Fi sounds">LO_FI</button>
+    <button class="tab" onclick="setGenre('cinematic music','this')" data-tip="Browse Cinematic sounds">CINEMATIC</button>
+    <button class="tab" onclick="setGenre('drum loop','this')" data-tip="Browse Drum sounds">DRUMS</button>
 </div>
 
 <!-- POPULAR -->
@@ -565,10 +565,10 @@
                     <button class="ctrl-btn play-main" id="det-play-btn" onclick="toggleDetailPlay()" data-tip="Play / Pause (SPACE)">▶</button>
                     <button class="ctrl-btn" id="loop-btn" onclick="toggleLoop()" data-tip="Toggle loop (L)">⟳ LOOP</button>
                     <div class="speed-group">
-                        <button class="speed-btn" onclick="setSpeed(0.5)">0.5×</button>
-                        <button class="speed-btn active" onclick="setSpeed(1)">1×</button>
-                        <button class="speed-btn" onclick="setSpeed(1.5)">1.5×</button>
-                        <button class="speed-btn" onclick="setSpeed(2)">2×</button>
+                        <button class="speed-btn" onclick="setSpeed(0.5)" data-tip="0.5× speed">0.5×</button>
+                        <button class="speed-btn active" onclick="setSpeed(1)" data-tip="Normal speed">1×</button>
+                        <button class="speed-btn" onclick="setSpeed(1.5)" data-tip="1.5× speed">1.5×</button>
+                        <button class="speed-btn" onclick="setSpeed(2)" data-tip="2× speed">2×</button>
                     </div>
                     <div class="vol-row" style="flex:1;min-width:100px;">
                         <span class="vol-icon" id="vol-icon" onclick="toggleMute()" data-tip="Mute / Unmute (M)">
@@ -578,7 +578,7 @@
                                 <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
                             </svg>
                         </span>
-                        <input type="range" id="vol-slider" min="0" max="1" step="0.05" value="1" oninput="setVolume(this.value)">
+                        <input type="range" id="vol-slider" min="0" max="1" step="0.05" value="1" oninput="setVolume(this.value)" data-tip="Adjust volume">
                     </div>
                 </div>
                 <div class="kbd-hint">

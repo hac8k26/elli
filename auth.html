@@ -157,8 +157,8 @@
 </head>
 <body>
 <nav>
-    <a href="index.html" class="nav-logo">ELLIE</a>
-    <a href="index.html" class="nav-back">← BACK_TO_HOME</a>
+    <a href="index.html" class="nav-logo" data-tip="Ellie — Sound Registry">ELLIE</a>
+    <a href="index.html" class="nav-back" data-tip="Return to home page">← BACK_TO_HOME</a>
 </nav>
 
 <div class="auth-wrap">
@@ -175,21 +175,21 @@
 
             <div class="form-group">
                 <label class="form-label">EMAIL_ADDRESS</label>
-                <input class="form-input" type="email" id="login-email" placeholder="you@example.com" required>
+                <input class="form-input" type="email" id="login-email" placeholder="you@example.com" required data-tip="Enter your email address">
             </div>
 
             <div class="form-group">
                 <label class="form-label">PASSWORD</label>
-                <input class="form-input" type="password" id="login-pass" placeholder="••••••••" required>
+                <input class="form-input" type="password" id="login-pass" placeholder="••••••••" required data-tip="Enter your password">
                 <span class="form-hint"><a href="#" style="color:var(--accent);text-decoration:none;" onclick="showForgot()" data-tip="Send a password reset email">FORGOT_PASSWORD?</a></span>
             </div>
 
             <div class="form-check">
-                <input type="checkbox" id="remember">
+                <input type="checkbox" id="remember" data-tip="Stay logged in across sessions">
                 <label for="remember">Keep me logged in</label>
             </div>
 
-            <button class="btn-submit" type="submit">$ LOGIN →</button>
+            <button class="btn-submit" type="submit" data-tip="Sign in to your account">$ LOGIN →</button>
 
             <div class="divider">OR</div>
 
@@ -204,7 +204,7 @@
             </button>
 
             <div class="form-footer">
-                No account? <a onclick="switchTab('signup')">SIGN_UP</a>
+                No account? <a onclick="switchTab('signup')" data-tip="Create a new account">SIGN_UP</a>
             </div>
         </form>
 
@@ -214,27 +214,27 @@
 
             <div class="form-group">
                 <label class="form-label">EMAIL_ADDRESS</label>
-                <input class="form-input" type="email" id="signup-email" placeholder="you@example.com" required>
+                <input class="form-input" type="email" id="signup-email" placeholder="you@example.com" required data-tip="Enter your email address">
             </div>
 
             <div class="form-group">
                 <label class="form-label">PASSWORD</label>
-                <input class="form-input" type="password" id="signup-pass" placeholder="Min. 8 characters" required oninput="checkStrength(this.value)">
+                <input class="form-input" type="password" id="signup-pass" placeholder="Min. 8 characters" required oninput="checkStrength(this.value)" data-tip="Choose a strong password">
                 <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
                 <span class="form-hint" id="strength-label">—</span>
             </div>
 
             <div class="form-group">
                 <label class="form-label">CONFIRM_PASSWORD</label>
-                <input class="form-input" type="password" id="signup-confirm" placeholder="••••••••" required>
+                <input class="form-input" type="password" id="signup-confirm" placeholder="••••••••" required data-tip="Re-enter your password to confirm">
             </div>
 
             <div class="form-check">
-                <input type="checkbox" id="agree" required>
+                <input type="checkbox" id="agree" required data-tip="You must agree to continue">
                 <label for="agree">I agree to the <a href="terms.html" target="_blank">Terms of Service</a> and <a href="terms.html#privacy" target="_blank">Privacy Policy</a></label>
             </div>
 
-            <button class="btn-submit" type="submit">$ CREATE_ACCOUNT →</button>
+            <button class="btn-submit" type="submit" data-tip="Create your Ellie account">$ CREATE_ACCOUNT →</button>
 
             <div class="divider">OR</div>
 
@@ -249,7 +249,7 @@
             </button>
 
             <div class="form-footer">
-                Already have an account? <a onclick="switchTab('login')">LOGIN</a>
+                Already have an account? <a onclick="switchTab('login')" data-tip="Sign in to your account">LOGIN</a>
             </div>
         </form>
 

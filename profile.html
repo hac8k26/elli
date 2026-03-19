@@ -189,7 +189,7 @@
 <body>
 <nav>
     <a href="index.html" class="nav-logo" data-tip="Go to home">ELLIE</a>
-    <a href="browse.html" class="nav-back" data-tip="Back to browse">← BACK_TO_REGISTRY</a>
+    <a href="browse.html" class="nav-back" data-tip="Back to the sound registry">← BACK_TO_REGISTRY</a>
 </nav>
 
 <div class="wrap" id="main-wrap">
@@ -209,7 +209,7 @@
             wrap.innerHTML = `
                 <div class="not-logged">
                     <p>// NOT_AUTHENTICATED — sign in to view your profile.</p>
-                    <a href="auth.html" class="btn-login">$ LOGIN →</a>
+                    <a href="auth.html" class="btn-login" data-tip="Sign in to view your profile">$ LOGIN →</a>
                 </div>`;
             return;
         }
@@ -263,7 +263,7 @@
                         <input class="form-input" type="email" id="inp-email" value="${user.email}" disabled>
                     </div>
                 </div>
-                <button class="btn-save" onclick="saveProfile()">$ SAVE_CHANGES →</button>
+                <button class="btn-save" onclick="saveProfile()" data-tip="Save profile changes">$ SAVE_CHANGES →</button>
                 <div class="form-msg" id="profile-msg"></div>
             </div>
             <div class="section-tag" style="margin-top:32px;">// CHANGE_PASSWORD</div>
@@ -276,7 +276,7 @@
                     <label class="form-label">CONFIRM_PASSWORD</label>
                     <input class="form-input" type="password" id="inp-pass-confirm" placeholder="••••••••">
                 </div>
-                <button class="btn-save" onclick="changePassword()">$ UPDATE_PASSWORD →</button>
+                <button class="btn-save" onclick="changePassword()" data-tip="Update your password">$ UPDATE_PASSWORD →</button>
                 <div class="form-msg" id="pass-msg"></div>
             </div>
             <div class="section-tag" style="margin-top:32px;">// SAVED_BOOKMARKS</div>
@@ -284,7 +284,7 @@
             <div class="danger-zone">
                 <div class="danger-title">// DANGER_ZONE</div>
                 <div class="danger-desc">Signing out will end your current session.</div>
-                <button class="btn-danger" onclick="signOut()">$ SIGN_OUT →</button>
+                <button class="btn-danger" onclick="signOut()" data-tip="Sign out of your account">$ SIGN_OUT →</button>
             </div>
         `;
     }
@@ -310,7 +310,7 @@
     function renderBmPreview(bookmarks) {
         if (!bookmarks.length) return `<div class="bm-empty-msg">// NO_BOOKMARKS_YET — star sounds in the registry to save them here.</div>`;
         const cards = bookmarks.slice(0, 8).map(b => `
-            <div class="bm-preview-card" onclick="window.location.href='browse.html'">
+            <div class="bm-preview-card" onclick="window.location.href='browse.html'" data-tip="Open in registry">
                 <div class="bm-preview-img">
                     <img src="https://picsum.photos/seed/${b.sound_id}/300/200?grayscale" loading="lazy">
                 </div>
