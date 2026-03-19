@@ -209,6 +209,17 @@
         .footer-copy { font-size: 10px; color: var(--secondary); }
 
 
+
+        /* ── TOOLTIP ── */
+        #tip {
+            position: fixed; pointer-events: none; z-index: 99999;
+            background: var(--text); color: var(--bg);
+            font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em;
+            padding: 5px 9px; white-space: nowrap;
+            opacity: 0; transition: opacity 0.15s;
+        }
+        #tip.show { opacity: 1; }
+
         /* ── AUTH TOAST ── */
         #auth-toast {
             position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(16px);
@@ -251,8 +262,8 @@
 <!-- NAV -->
 <nav>
     <div class="nav-logo">ELLIE</div>
-    <a href="auth.html" class="nav-cta" id="nav-auth-btn">LOGIN / SIGN_UP →</a>
-    <span id="nav-user-name" style="display:none; font-size:11px; font-weight:600; color:var(--accent); letter-spacing:0.05em; cursor:pointer;" onclick="window.location.href='profile.html'" title="View profile"></span>
+    <a href="auth.html" class="nav-cta" id="nav-auth-btn" data-tip="Login or create an account">LOGIN / SIGN_UP →</a>
+    <span id="nav-user-name" data-tip="View your profile" style="display:none; font-size:11px; font-weight:600; color:var(--accent); letter-spacing:0.05em; cursor:pointer;" onclick="window.location.href='profile.html'" title="View profile"></span>
 </nav>
 
 <!-- HERO -->
@@ -269,8 +280,8 @@
             thousands of CC-licensed audio assets — sorted by popularity, filtered by genre.
         </p>
         <div class="hero-btns">
-            <a href="browse.html" class="btn-primary" id="enter-registry-btn" onclick="return checkAuthBeforeEnter(event)">$ ENTER_REGISTRY</a>
-            <a href="#how" class="btn-secondary">HOW_IT_WORKS</a>
+            <a href="browse.html" class="btn-primary" id="enter-registry-btn" data-tip="Browse the sound registry" onclick="return checkAuthBeforeEnter(event)">$ ENTER_REGISTRY</a>
+            <a href="#how" class="btn-secondary" data-tip="See how it works">HOW_IT_WORKS</a>
         </div>
         <div style="margin-top:16px;display:flex;gap:16px;">
             <a href="terms.html" style="font-family:var(--mono);font-size:9px;color:var(--secondary);text-decoration:none;letter-spacing:0.08em;">TERMS</a>
@@ -393,52 +404,52 @@
         <h2 class="section-title">Find your category</h2>
     </div>
     <div class="genres-grid">
-        <a href="browse.html" class="genre-card" onclick="return checkAuthBeforeEnter(event)">
+        <a href="browse.html" class="genre-card" data-tip="Browse Electronic sounds" onclick="return checkAuthBeforeEnter(event)">
             <div class="genre-name">ELECTRONIC</div>
             <div class="genre-count">SYNTHS · BEATS · PADS</div>
             <div class="genre-bar"></div>
         </a>
-        <a href="browse.html" class="genre-card" onclick="return checkAuthBeforeEnter(event)">
+        <a href="browse.html" class="genre-card" data-tip="Browse Ambient sounds" onclick="return checkAuthBeforeEnter(event)">
             <div class="genre-name">AMBIENT</div>
             <div class="genre-count">DRONES · TEXTURES · SPACE</div>
             <div class="genre-bar"></div>
         </a>
-        <a href="browse.html" class="genre-card" onclick="return checkAuthBeforeEnter(event)">
+        <a href="browse.html" class="genre-card" data-tip="Browse Hip Hop sounds" onclick="return checkAuthBeforeEnter(event)">
             <div class="genre-name">HIP_HOP</div>
             <div class="genre-count">BEATS · LOOPS · SAMPLES</div>
             <div class="genre-bar"></div>
         </a>
-        <a href="browse.html" class="genre-card" onclick="return checkAuthBeforeEnter(event)">
+        <a href="browse.html" class="genre-card" data-tip="Browse Jazz sounds" onclick="return checkAuthBeforeEnter(event)">
             <div class="genre-name">JAZZ</div>
             <div class="genre-count">PIANO · BRASS · SWING</div>
             <div class="genre-bar"></div>
         </a>
-        <a href="browse.html" class="genre-card" onclick="return checkAuthBeforeEnter(event)">
+        <a href="browse.html" class="genre-card" data-tip="Browse Classical sounds" onclick="return checkAuthBeforeEnter(event)">
             <div class="genre-name">CLASSICAL</div>
             <div class="genre-count">STRINGS · ORCHESTRA · SOLO</div>
             <div class="genre-bar"></div>
         </a>
-        <a href="browse.html" class="genre-card" onclick="return checkAuthBeforeEnter(event)">
+        <a href="browse.html" class="genre-card" data-tip="Browse Rock sounds" onclick="return checkAuthBeforeEnter(event)">
             <div class="genre-name">ROCK</div>
             <div class="genre-count">GUITAR · DRUMS · RIFFS</div>
             <div class="genre-bar"></div>
         </a>
-        <a href="browse.html" class="genre-card" onclick="return checkAuthBeforeEnter(event)">
+        <a href="browse.html" class="genre-card" data-tip="Browse Lo-Fi sounds" onclick="return checkAuthBeforeEnter(event)">
             <div class="genre-name">LO_FI</div>
             <div class="genre-count">CHILL · VINYL · HAZY</div>
             <div class="genre-bar"></div>
         </a>
-        <a href="browse.html" class="genre-card" onclick="return checkAuthBeforeEnter(event)">
+        <a href="browse.html" class="genre-card" data-tip="Browse Cinematic sounds" onclick="return checkAuthBeforeEnter(event)">
             <div class="genre-name">CINEMATIC</div>
             <div class="genre-count">SCORE · TENSION · EPIC</div>
             <div class="genre-bar"></div>
         </a>
-        <a href="browse.html" class="genre-card" onclick="return checkAuthBeforeEnter(event)">
+        <a href="browse.html" class="genre-card" data-tip="Browse Drum sounds" onclick="return checkAuthBeforeEnter(event)">
             <div class="genre-name">DRUMS</div>
             <div class="genre-count">LOOPS · FILLS · BREAKS</div>
             <div class="genre-bar"></div>
         </a>
-        <a href="browse.html" class="genre-card" onclick="return checkAuthBeforeEnter(event)">
+        <a href="browse.html" class="genre-card" data-tip="Browse all music" onclick="return checkAuthBeforeEnter(event)">
             <div class="genre-name">ALL_MUSIC</div>
             <div class="genre-count">BROWSE · EVERYTHING</div>
             <div class="genre-bar"></div>
@@ -451,7 +462,7 @@
     <div class="section-tag" style="color:var(--secondary);">// READY_TO_START</div>
     <h2>Enter the registry.<br>Find your sound.</h2>
     <p>500,000+ CC-licensed audio assets. Live API. No account needed.</p>
-    <a href="browse.html" class="btn-primary" onclick="return checkAuthBeforeEnter(event)">$ LAUNCH_REGISTRY →</a>
+    <a href="browse.html" class="btn-primary" onclick="return checkAuthBeforeEnter(event)" data-tip="Enter the registry">$ LAUNCH_REGISTRY →</a>
 </div>
 
 <!-- FOOTER -->
@@ -525,6 +536,35 @@
         setTimeout(() => toast.classList.remove('show'), 4000);
         return false;
     }
+</script>
+<div id="tip"></div>
+<script>
+(function(){
+    const tip = document.getElementById('tip');
+    let cur = null;
+    document.addEventListener('mouseover', e => {
+        const el = e.target.closest('[data-tip]');
+        if (!el) return;
+        cur = el;
+        tip.textContent = el.dataset.tip;
+        tip.classList.add('show');
+    });
+    document.addEventListener('mouseout', e => {
+        if (cur && !cur.contains(e.relatedTarget)) {
+            tip.classList.remove('show');
+            cur = null;
+        }
+    });
+    document.addEventListener('mousemove', e => {
+        if (!cur) return;
+        const x = e.clientX + 14, y = e.clientY + 14;
+        const tw = tip.offsetWidth, th = tip.offsetHeight;
+        tip.style.left = (x + tw > window.innerWidth ? e.clientX - tw - 6 : x) + 'px';
+        tip.style.top  = (y + th > window.innerHeight ? e.clientY - th - 6 : y) + 'px';
+    });
+    // hide on scroll
+    document.addEventListener('scroll', () => tip.classList.remove('show'), true);
+})();
 </script>
 </body>
 </html>

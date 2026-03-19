@@ -160,6 +160,17 @@
         }
         .btn-login:hover { background: var(--accent); }
 
+
+        /* ── TOOLTIP ── */
+        #tip {
+            position: fixed; pointer-events: none; z-index: 99999;
+            background: var(--text); color: var(--bg);
+            font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em;
+            padding: 5px 9px; white-space: nowrap;
+            opacity: 0; transition: opacity 0.15s;
+        }
+        #tip.show { opacity: 1; }
+
         /* ── RESPONSIVE ── */
         @media (max-width: 700px) {
             nav { padding: 14px 16px; }
@@ -177,8 +188,8 @@
 </head>
 <body>
 <nav>
-    <a href="index.html" class="nav-logo">ELLIE</a>
-    <a href="browse.html" class="nav-back">← BACK_TO_REGISTRY</a>
+    <a href="index.html" class="nav-logo" data-tip="Go to home">ELLIE</a>
+    <a href="browse.html" class="nav-back" data-tip="Back to browse">← BACK_TO_REGISTRY</a>
 </nav>
 
 <div class="wrap" id="main-wrap">
@@ -345,6 +356,34 @@
         el.className = 'form-msg ' + type + ' show';
         el.textContent = text;
     }
+</script>
+<div id="tip"></div>
+<script>
+(function(){
+    const tip = document.getElementById('tip');
+    let cur = null;
+    document.addEventListener('mouseover', e => {
+        const el = e.target.closest('[data-tip]');
+        if (!el) return;
+        cur = el;
+        tip.textContent = el.dataset.tip;
+        tip.classList.add('show');
+    });
+    document.addEventListener('mouseout', e => {
+        if (cur && !cur.contains(e.relatedTarget)) {
+            tip.classList.remove('show');
+            cur = null;
+        }
+    });
+    document.addEventListener('mousemove', e => {
+        if (!cur) return;
+        const x = e.clientX + 14, y = e.clientY + 14;
+        const tw = tip.offsetWidth, th = tip.offsetHeight;
+        tip.style.left = (x + tw > window.innerWidth ? e.clientX - tw - 6 : x) + 'px';
+        tip.style.top  = (y + th > window.innerHeight ? e.clientY - th - 6 : y) + 'px';
+    });
+    document.addEventListener('scroll', () => tip.classList.remove('show'), true);
+})();
 </script>
 </body>
 </html>

@@ -136,6 +136,17 @@
         .strength-fill { height: 100%; width: 0%; transition: width 0.3s, background 0.3s; }
 
 
+
+        /* ── TOOLTIP ── */
+        #tip {
+            position: fixed; pointer-events: none; z-index: 99999;
+            background: var(--text); color: var(--bg);
+            font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em;
+            padding: 5px 9px; white-space: nowrap;
+            opacity: 0; transition: opacity 0.15s;
+        }
+        #tip.show { opacity: 1; }
+
         /* ── RESPONSIVE ── */
         @media (max-width: 540px) {
             nav { padding: 14px 16px; }
@@ -154,8 +165,8 @@
     <div class="auth-box">
 
         <div class="auth-tabs">
-            <button class="auth-tab active" onclick="switchTab('login')">LOGIN</button>
-            <button class="auth-tab" onclick="switchTab('signup')">SIGN_UP</button>
+            <button class="auth-tab active" onclick="switchTab('login')" data-tip="Sign in to your account">LOGIN</button>
+            <button class="auth-tab" onclick="switchTab('signup')" data-tip="Create a new account">SIGN_UP</button>
         </div>
 
         <!-- LOGIN FORM -->
@@ -170,7 +181,7 @@
             <div class="form-group">
                 <label class="form-label">PASSWORD</label>
                 <input class="form-input" type="password" id="login-pass" placeholder="••••••••" required>
-                <span class="form-hint"><a href="#" style="color:var(--accent);text-decoration:none;" onclick="showForgot()">FORGOT_PASSWORD?</a></span>
+                <span class="form-hint"><a href="#" style="color:var(--accent);text-decoration:none;" onclick="showForgot()" data-tip="Send a password reset email">FORGOT_PASSWORD?</a></span>
             </div>
 
             <div class="form-check">
@@ -182,12 +193,12 @@
 
             <div class="divider">OR</div>
 
-            <button class="btn-oauth" type="button" onclick="oauthGoogle()">
+            <button class="btn-oauth" type="button" onclick="oauthGoogle()" data-tip="Continue with Google">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                 CONTINUE_WITH_GOOGLE
             </button>
 
-            <button class="btn-oauth" type="button" onclick="oauthGithub()">
+            <button class="btn-oauth" type="button" onclick="oauthGithub()" data-tip="Continue with GitHub">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
                 CONTINUE_WITH_GITHUB
             </button>
@@ -227,12 +238,12 @@
 
             <div class="divider">OR</div>
 
-            <button class="btn-oauth" type="button" onclick="oauthGoogle()">
+            <button class="btn-oauth" type="button" onclick="oauthGoogle()" data-tip="Continue with Google">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                 CONTINUE_WITH_GOOGLE
             </button>
 
-            <button class="btn-oauth" type="button" onclick="oauthGithub()">
+            <button class="btn-oauth" type="button" onclick="oauthGithub()" data-tip="Continue with GitHub">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
                 CONTINUE_WITH_GITHUB
             </button>
@@ -342,6 +353,34 @@
         fill.style.background = l.c;
         label.textContent = val ? l.t : '--';
     }
+</script>
+<div id="tip"></div>
+<script>
+(function(){
+    const tip = document.getElementById('tip');
+    let cur = null;
+    document.addEventListener('mouseover', e => {
+        const el = e.target.closest('[data-tip]');
+        if (!el) return;
+        cur = el;
+        tip.textContent = el.dataset.tip;
+        tip.classList.add('show');
+    });
+    document.addEventListener('mouseout', e => {
+        if (cur && !cur.contains(e.relatedTarget)) {
+            tip.classList.remove('show');
+            cur = null;
+        }
+    });
+    document.addEventListener('mousemove', e => {
+        if (!cur) return;
+        const x = e.clientX + 14, y = e.clientY + 14;
+        const tw = tip.offsetWidth, th = tip.offsetHeight;
+        tip.style.left = (x + tw > window.innerWidth ? e.clientX - tw - 6 : x) + 'px';
+        tip.style.top  = (y + th > window.innerHeight ? e.clientY - th - 6 : y) + 'px';
+    });
+    document.addEventListener('scroll', () => tip.classList.remove('show'), true);
+})();
 </script>
 </body>
 </html

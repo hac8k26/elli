@@ -333,6 +333,17 @@
             display: none; font-size: 12px; width: auto;
         }
 
+
+        /* ── TOOLTIP ── */
+        #tip {
+            position: fixed; pointer-events: none; z-index: 99999;
+            background: var(--text); color: var(--bg);
+            font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em;
+            padding: 5px 9px; white-space: nowrap;
+            opacity: 0; transition: opacity 0.15s;
+        }
+        #tip.show { opacity: 1; }
+
         /* ── DESKTOP LAYOUT ── */
         @media (min-width: 900px) {
             body { padding: 40px; }
@@ -392,9 +403,9 @@
 </head>
 <body>
 <nav>
-    <div class="nav-logo">ELLIE</div>
+    <div class="nav-logo" data-tip="Home">ELLIE</div>
     <div style="display:flex; align-items:center; gap:20px;">
-        <span id="nav-user-name" style="font-size:11px; font-weight:600; color:var(--accent); letter-spacing:0.05em; cursor:pointer;" onclick="window.location.href='profile.html'" title="View profile"></span>
+        <span id="nav-user-name" data-tip="View your profile" style="font-size:11px; font-weight:600; color:var(--accent); letter-spacing:0.05em; cursor:pointer;" onclick="window.location.href='profile.html'" title="View profile"></span>
     </div>
 </nav>
 
@@ -402,7 +413,7 @@
     <div class="search-area">
         <span class="prompt">❯</span>
         <input type="text" id="query" placeholder="search_registry --live --all" onkeypress="if(event.key==='Enter') executeSearch()">
-        <button onclick="executeSearch()" style="background:none;border:none;color:var(--accent);font-family:var(--mono);font-size:12px;cursor:pointer;padding:0 0 0 10px;flex-shrink:0;">RUN</button>
+        <button onclick="executeSearch()" style="background:none;border:none;color:var(--accent);font-family:var(--mono);font-size:12px;cursor:pointer;padding:0 0 0 10px;flex-shrink:0;" data-tip="Search sounds">RUN</button>
     </div>
 </header>
 
@@ -430,7 +441,7 @@
 <div class="grid" id="main-grid"></div>
 
 <div class="pagination">
-    <button class="btn-load" id="load-btn" onclick="loadNextPage()">$ load --next_batch</button>
+    <button class="btn-load" id="load-btn" onclick="loadNextPage()" data-tip="Load more sounds">$ load --next_batch</button>
     <div id="status" style="font-size: 11px; margin-top: 15px; color: var(--secondary);">Status: Initializing_API...</div>
 </div>
 
@@ -438,14 +449,14 @@
 
 <div id="detail-view">
     <div class="detail-topbar">
-        <div class="back-btn" onclick="closeDetail()">← EXIT_DETAIL_VIEW</div>
+        <div class="back-btn" onclick="closeDetail()" data-tip="Close detail view (ESC)">← EXIT_DETAIL_VIEW</div>
         <div id="det-id" style="font-size:10px;color:var(--accent);">#FETCHING_METADATA...</div>
     </div>
     <div class="detail-scroll">
     <div class="detail-container">
         <div class="detail-visual">
             <img id="det-img" src="" alt="asset_render">
-            <div class="fav-badge" id="fav-btn" onclick="toggleFav()" title="Bookmark">☆</div>
+            <div class="fav-badge" id="fav-btn" onclick="toggleFav()" data-tip="Bookmark this sound">☆</div>
         </div>
         <div class="detail-info">
             <div class="detail-title" id="det-name">ASSET_PENDING</div>
@@ -465,15 +476,15 @@
             <!-- PLAYER -->
             <div class="det-player-wrap" id="det-player-ui">
                 <!-- waveform -->
-                <canvas id="waveform-canvas" onclick="seekByCanvas(event)"></canvas>
+                <canvas id="waveform-canvas" onclick="seekByCanvas(event)" data-tip="Click to seek"></canvas>
                 <div class="det-time-row">
                     <span id="det-time">0:00</span>
                     <span id="det-dur">--:--</span>
                 </div>
                 <!-- main controls -->
                 <div class="det-controls">
-                    <button class="ctrl-btn play-main" id="det-play-btn" onclick="toggleDetailPlay()">▶</button>
-                    <button class="ctrl-btn" id="loop-btn" onclick="toggleLoop()" title="Loop">⟳ LOOP</button>
+                    <button class="ctrl-btn play-main" id="det-play-btn" onclick="toggleDetailPlay()" data-tip="Play / Pause (SPACE)">▶</button>
+                    <button class="ctrl-btn" id="loop-btn" onclick="toggleLoop()" data-tip="Toggle loop (L)">⟳ LOOP</button>
                     <div class="speed-group">
                         <button class="speed-btn" onclick="setSpeed(0.5)">0.5×</button>
                         <button class="speed-btn active" onclick="setSpeed(1)">1×</button>
@@ -481,7 +492,7 @@
                         <button class="speed-btn" onclick="setSpeed(2)">2×</button>
                     </div>
                     <div class="vol-row" style="flex:1;min-width:100px;">
-                        <span class="vol-icon" id="vol-icon" onclick="toggleMute()">
+                        <span class="vol-icon" id="vol-icon" onclick="toggleMute()" data-tip="Mute / Unmute (M)">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
                                 <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
                                 <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
@@ -502,9 +513,9 @@
 
             <!-- ACTIONS -->
             <div class="action-btns">
-                <button class="btn btn-filled" id="det-dl-btn" onclick="downloadSound()">↓ DOWNLOAD_RAW</button>
-                <button class="btn" onclick="copyShareLink()">⎘ SHARE_LINK</button>
-                <button class="btn" id="fav-action-btn" onclick="toggleFav()">☆ BOOKMARK</button>
+                <button class="btn btn-filled" id="det-dl-btn" onclick="downloadSound()" data-tip="Download MP3 file">↓ DOWNLOAD_RAW</button>
+                <button class="btn" onclick="copyShareLink()" data-tip="Copy Freesound link">⎘ SHARE_LINK</button>
+                <button class="btn" id="fav-action-btn" onclick="toggleFav()" data-tip="Save to bookmarks">☆ BOOKMARK</button>
             </div>
 
             <!-- SIMILAR SOUNDS -->
@@ -984,5 +995,33 @@
     };
 </script>
 
+<div id="tip"></div>
+<script>
+(function(){
+    const tip = document.getElementById('tip');
+    let cur = null;
+    document.addEventListener('mouseover', e => {
+        const el = e.target.closest('[data-tip]');
+        if (!el) return;
+        cur = el;
+        tip.textContent = el.dataset.tip;
+        tip.classList.add('show');
+    });
+    document.addEventListener('mouseout', e => {
+        if (cur && !cur.contains(e.relatedTarget)) {
+            tip.classList.remove('show');
+            cur = null;
+        }
+    });
+    document.addEventListener('mousemove', e => {
+        if (!cur) return;
+        const x = e.clientX + 14, y = e.clientY + 14;
+        const tw = tip.offsetWidth, th = tip.offsetHeight;
+        tip.style.left = (x + tw > window.innerWidth ? e.clientX - tw - 6 : x) + 'px';
+        tip.style.top  = (y + th > window.innerHeight ? e.clientY - th - 6 : y) + 'px';
+    });
+    document.addEventListener('scroll', () => tip.classList.remove('show'), true);
+})();
+</script>
 </body>
 </html>
