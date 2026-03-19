@@ -218,6 +218,17 @@
         .kbd-hint { font-size: 9px; color: var(--secondary); margin-top: 6px; opacity: 0.7; }
         .kbd { display: inline-block; border: 1px solid var(--border); padding: 1px 5px; font-size: 8px; margin: 0 2px; }
 
+        /* ── EMPTY STATE ── */
+        .empty-state {
+            grid-column: 1 / -1;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 64px 20px; gap: 20px; background: var(--bg);
+        }
+        .empty-state svg { color: var(--border); opacity: 0.6; }
+        .empty-state-title { font-size: 13px; font-weight: 600; color: var(--secondary); letter-spacing: 0.05em; }
+        .empty-state-sub { font-size: 10px; color: var(--secondary); opacity: 0.7; letter-spacing: 0.05em; }
+        .empty-state-query { font-size: 11px; color: var(--accent); margin-top: 4px; }
+
         /* ── SKELETON LOADER ── */
         .skeleton-cell {
             background: var(--bg); padding: 12px;
@@ -716,6 +727,23 @@
             const grid = document.getElementById('main-grid');
             // remove skeleton placeholders
             grid.querySelectorAll('.skeleton-cell').forEach(s => s.remove());
+
+            if (!data.results || data.results.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"/>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                            <line x1="8" y1="11" x2="14" y2="11"/>
+                        </svg>
+                        <div class="empty-state-title">NO_RESULTS_FOUND</div>
+                        <div class="empty-state-query">"${queryText}"</div>
+                        <div class="empty-state-sub">Try a different keyword or pick a genre tab</div>
+                    </div>`;
+                document.getElementById('load-btn').style.display = 'none';
+                document.getElementById('status').innerText = `Status: No_Results — query_returned_empty`;
+                return;
+            }
             data.results.forEach(s => {
                 const imgUrl = `https://picsum.photos/seed/${s.id}/600/400?grayscale`;
                 const cell = document.createElement('div');
