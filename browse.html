@@ -467,24 +467,24 @@
 <nav>
     <div class="nav-logo" data-tip="Go to home page" onclick="window.location.href='index.html'">ELLIE</div>
     <div style="display:flex; align-items:center; gap:12px;">
-        <div class="notif-wrap" id="notif-wrap">
-        <button class="notif-btn" id="notif-btn" onclick="toggleNotif()" data-tip="Notifications">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-            </svg>
-            <span class="notif-badge" id="notif-badge">3</span>
-        </button>
-        <div class="notif-panel" id="notif-panel">
-            <div class="notif-header">
-                <span class="notif-header-title">// NOTIFICATIONS</span>
-                <button class="notif-mark-all" onclick="markAllRead()" data-tip="Mark all notifications as read">MARK_ALL_READ</button>
-            </div>
-            <div class="notif-list" id="notif-list"></div>
-            <div class="notif-footer">ELLIE_REGISTRY — v1.0</div>
-        </div>
-    </div>
         <span id="nav-user-name" data-tip="View your profile" style="font-size:11px; font-weight:600; color:var(--accent); letter-spacing:0.05em; cursor:pointer;" onclick="window.location.href='profile.html'" title="View profile"></span>
+        <div class="notif-wrap" id="notif-wrap">
+            <button class="notif-btn" id="notif-btn" onclick="toggleNotif()" data-tip="Notifications">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                </svg>
+                <span class="notif-badge" id="notif-badge">3</span>
+            </button>
+            <div class="notif-panel" id="notif-panel">
+                <div class="notif-header">
+                    <span class="notif-header-title">// NOTIFICATIONS</span>
+                    <button class="notif-mark-all" onclick="markAllRead()" data-tip="Mark all notifications as read">MARK_ALL_READ</button>
+                </div>
+                <div class="notif-list" id="notif-list"></div>
+                <div class="notif-footer">ELLIE_REGISTRY — v1.0</div>
+            </div>
+        </div>
     </div>
 </nav>
 
